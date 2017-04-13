@@ -1,0 +1,64 @@
+@charset "utf-8";
+/* CSS Document */
+
+.movie-thumbnail {
+  border: none;
+  padding: 0px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+  
+}
+.movie-poster {
+  border-radius: 4px 4px 0 0;
+}
+
+.movie-text{
+  padding: 10px;
+}
+
+#title {
+  margin-top: 0;
+  color: #262526;
+  text-decoration: none;
+}
+
+h2 {
+  margin-top: 0;
+  color: #262526;
+}
+
+h3 {
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.well {
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+.actor-thumbnail {
+  display: inline-block;
+  width: 200px;
+  border: none;
+  padding: 0;
+  margin: 5px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+  transition: box-shadow 0.20s;
+  text-decoration: none!important;
+}
+
+.actor-thumbnail:hover, .actor-thumbnail:focus {
+  box-shadow: 0 1px 20px rgba(0, 0, 0, 0.5);
+}
+
+.actor-portrait {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  width: 100%;
+}
+
+.actor-name {
+  display: block;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 20px;
+  color: #262526;
+  margin: 10px;
+}

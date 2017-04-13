@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>registration</display-name>
+  <welcome-file-list>
+    <welcome-file>movies.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>RegistrationController</display-name>
+    <servlet-name>RegistrationController</servlet-name>
+    <servlet-class>controller.RegistrationController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RegistrationController</servlet-name>
+    <url-pattern>/RegistrationController</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>LoginController</display-name>
+    <servlet-name>LoginController</servlet-name>
+    <servlet-class>controller.LoginController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginController</servlet-name>
+    <url-pattern>/LoginController</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>AccountSettingsController</display-name>
+    <servlet-name>AccountSettingsController</servlet-name>
+    <servlet-class>controller.AccountSettingsController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AccountSettingsController</servlet-name>
+    <url-pattern>/AccountSettingsController</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>LogoutController</display-name>
+    <servlet-name>LogoutController</servlet-name>
+    <servlet-class>controller.LogoutController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogoutController</servlet-name>
+    <url-pattern>/LogoutController</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>DisplayMoviesMainController</display-name>
+    <servlet-name>DisplayMoviesMainController</servlet-name>
+    <servlet-class>controller.DisplayMoviesMainController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DisplayMoviesMainController</servlet-name>
+    <url-pattern>/displayMovies.jsp</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+    <description></description>
+    <display-name>MovieDetailsController</display-name>
+    <servlet-name>MovieDetailsController</servlet-name>
+    <servlet-class>controller.MovieDetailsController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MovieDetailsController</servlet-name>
+    <url-pattern>/MovieDetailsController</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>MovieFavController</display-name>
+    <servlet-name>MovieFavController</servlet-name>
+    <servlet-class>controller.MovieFavController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MovieFavController</servlet-name>
+    <url-pattern>/MovieFavController</url-pattern>
+  </servlet-mapping>
+  
+  
+    
+</web-app>

@@ -1,0 +1,22 @@
+@charset "utf-8";
+/* CSS Document */
+
+.well {
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+  color: #000;
+  text-decoration: none;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-family: 'Roboto', sans-serif;
+  color: #000;
+  margin-top: 0;
+}
+
+.article-content {
+  margin: 10px 0;
+}

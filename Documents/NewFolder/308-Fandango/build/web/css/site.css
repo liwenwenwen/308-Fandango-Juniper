@@ -1,0 +1,49 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+  background-color: #E3FBE2; /*light yellowish green*/
+}
+
+
+#title-bg {
+  background-color: #38B207; /*light green*/
+}
+
+#title-div{
+  font-family: 'Roboto Condensed', sans-serif;
+  color: #fff;
+  padding: 10px 15px;
+}
+
+#page-title {
+  font-family: 'Permanent Marker', cursive;
+  font-family: 'Luckiest Guy', cursive;
+  color: #FFEF0D;
+  font-size: 50px;
+}
+
+h1 {
+  font-family: 'Roboto Condensed', sans-serif;
+  color: #38B207; /*deep green*/
+  
+}
+
+h2 {
+  font-family: 'Roboto', sans-serif;
+  color: #000;
+}
+
+
+p {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+}
+
+.noMargin {
+  margin: 0!important;
+}
+
+.noPadding {
+  padding: 0!important;
+}
