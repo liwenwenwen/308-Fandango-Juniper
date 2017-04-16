@@ -43,6 +43,7 @@ public class LoginController extends HttpServlet {
                 List<Account> checkedUserList = checkUsernamePassword(em,uname,pass);
                 
                 if(checkedUserList.isEmpty()){
+                     em.close();
                      RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
                      rd.include(request, response);
                  }else{
@@ -50,9 +51,10 @@ public class LoginController extends HttpServlet {
                      /*create session here*/
                      HttpSession userInfoSession = request.getSession();
                      userInfoSession.setAttribute("UserInfoSession", loginUser);
+                     em.close();
+                     response.sendRedirect("movies.jsp");
                  } 
-                em.close();
-                response.sendRedirect("movies.jsp");
+                
                 
 	}
     public List<Account> checkUsernamePassword(EntityManager em, String uname, String pass){

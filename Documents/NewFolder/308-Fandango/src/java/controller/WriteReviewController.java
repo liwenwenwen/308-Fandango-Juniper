@@ -48,25 +48,34 @@ public class WriteReviewController extends HttpServlet {
                 /*access session*/
                 HttpSession session = request.getSession(false);
                 Account user = (Account)session.getAttribute("UserInfoSession");
-                int userId = user.getId();
                 int movieId = Integer.parseInt(strMovieId);
                 Movie movie = em.find(Movie.class, movieId);
                 String userName = user.getUserName();
+                int userId=user.getId();
                 /*create current timestamp*/
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 Date date = new Date();
                 String submitDate = dateFormat.format(date);
                 
                 /*check if user already has one*/
+                MovieReviews userWrote = checkUserReview(em,userId,movieId);
+                if(userWrote==null){
+                    /*create movie view obj*/
+                    MovieReviews newReview = new MovieReviews();
+                    MovieReviews review = createOrUpdateMoviewReview(newReview,reviewBody,submitDate,reviewTitle,userName,user,movie);
+                    em.getTransaction().begin();
+                    em.persist(review);
+                    em.getTransaction().commit();
+
+                }else{
+                    /*update the old review to new review*/
+                    MovieReviews updateReview = createOrUpdateMoviewReview(userWrote,reviewBody,submitDate,reviewTitle,userName,user,movie);
+                    em.getTransaction().begin();
+                    em.merge(updateReview);
+                    em.getTransaction().commit();
+                }
                 
-                /*create movie view obj*/
-                MovieReviews review = createNewMoviewReview(reviewBody,submitDate,reviewTitle,userName,user,movie);
-                em.getTransaction().begin();
-                em.persist(review);
-                em.getTransaction().commit();
-
                 em.close();
-
                 //RequestDispatcher rd = request.getRequestDispatcher("movieDetails.jsp");
                 //rd.forward(request, response);
                 response.sendRedirect("movieDetails.jsp");
@@ -76,8 +85,7 @@ public class WriteReviewController extends HttpServlet {
 	}
         
         
-    public MovieReviews createNewMoviewReview (String reviewBody,String submitDate,String reviewTitle, String userName,Account user,Movie movie){
-        MovieReviews review = new MovieReviews();
+    public MovieReviews createOrUpdateMoviewReview (MovieReviews review, String reviewBody,String submitDate,String reviewTitle, String userName,Account user,Movie movie){
         review.setBody(reviewBody);
         review.setDate(submitDate);
         review.setTitle(reviewTitle);
@@ -85,6 +93,20 @@ public class WriteReviewController extends HttpServlet {
         review.setUserId(user);
         review.setMovieId(movie);
         return review;
-    }            
+    }
+ 
+    public MovieReviews checkUserReview(EntityManager em,Integer userId,Integer movieId){
+        MovieReviews userwrote =null;
+        TypedQuery<MovieReviews> query = em.createNamedQuery("MovieReviews.findByUserIdMovieId", MovieReviews.class);
+        query.setParameter("userId", userId);
+        query.setParameter("movieId",movieId);
+        List<MovieReviews> movieReviewResults = query.getResultList();
+        if(movieReviewResults.isEmpty()){
+
+        }else{
+            userwrote = movieReviewResults.get(0);
+        }
+        return userwrote;
+    }
 }
 

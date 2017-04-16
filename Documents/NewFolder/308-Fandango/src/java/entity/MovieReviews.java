@@ -32,7 +32,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "MovieReviews.findByTitle", query = "SELECT m FROM MovieReviews m WHERE m.title = :title")
     , @NamedQuery(name = "MovieReviews.findByDate", query = "SELECT m FROM MovieReviews m WHERE m.date = :date")
     , @NamedQuery(name = "MovieReviews.findByBody", query = "SELECT m FROM MovieReviews m WHERE m.body = :body")
-    , @NamedQuery(name = "MovieReviews.findByUserName", query = "SELECT m FROM MovieReviews m WHERE m.userName = :userName")})
+    , @NamedQuery(name = "MovieReviews.findByUserName", query = "SELECT m FROM MovieReviews m WHERE m.userName = :userName")
+    , @NamedQuery(name = "MovieReviews.findByUserIdMovieId", query = "SELECT m FROM MovieReviews m WHERE m.movieId.id =:movieId AND m.userId.id=:userId")
+})
 public class MovieReviews implements Serializable {
 
     private static final long serialVersionUID = 1L;
