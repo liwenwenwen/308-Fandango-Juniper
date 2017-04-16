@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+   <listener>
+        <listener-class>servlet.EMF</listener-class>
+    </listener>
+
+    
   <display-name>registration</display-name>
   <welcome-file-list>
     <welcome-file>movies.jsp</welcome-file>
@@ -80,6 +85,18 @@
   <servlet-mapping>
     <servlet-name>MovieFavController</servlet-name>
     <url-pattern>/MovieFavController</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+    <description></description>
+    <display-name>WriteReviewController</display-name>
+    <servlet-name>WriteReviewController</servlet-name>
+    <servlet-class>controller.WriteReviewController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WriteReviewController</servlet-name>
+    <url-pattern>/WriteReviewController</url-pattern>
   </servlet-mapping>
   
   

@@ -30,12 +30,17 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a")
+    , @NamedQuery(name = "Account.findByUserNamePassword", query = "SELECT a FROM Account a WHERE a.userName = :userName AND a.password=:password")
     , @NamedQuery(name = "Account.findById", query = "SELECT a FROM Account a WHERE a.id = :id")
     , @NamedQuery(name = "Account.findByUserName", query = "SELECT a FROM Account a WHERE a.userName = :userName")
     , @NamedQuery(name = "Account.findByPassword", query = "SELECT a FROM Account a WHERE a.password = :password")
     , @NamedQuery(name = "Account.findByEmail", query = "SELECT a FROM Account a WHERE a.email = :email")})
 public class Account implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Collection<MovieReviews> movieReviewsCollection;
+
+   
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Collection<MovieFav> movieFavCollection;
 
@@ -124,5 +129,17 @@ public class Account implements Serializable {
     public void setMovieFavCollection(Collection<MovieFav> movieFavCollection) {
         this.movieFavCollection = movieFavCollection;
     }
+
+    @XmlTransient
+    public Collection<MovieReviews> getMovieReviewsCollection() {
+        return movieReviewsCollection;
+    }
+
+    public void setMovieReviewsCollection(Collection<MovieReviews> movieReviewsCollection) {
+        this.movieReviewsCollection = movieReviewsCollection;
+    }
+
+  
+   
     
 }

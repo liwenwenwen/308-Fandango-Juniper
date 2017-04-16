@@ -92,7 +92,7 @@
                  <img class="movie-poster img-responsive noMargin" src="<c:out value="${item.cover}"/>" alt="">
               <div class="movie-text">
                 <span class="movie-title"><c:out value="${item.title}"/></span>
-                <span class="movie-release">12/31/9999</span>
+                <span class="movie-release"><c:out value="${item.releaseDate}"/></span>
               </div>
             </a>
             </c:forEach>

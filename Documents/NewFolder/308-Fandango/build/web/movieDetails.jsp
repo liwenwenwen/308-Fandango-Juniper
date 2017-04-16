@@ -4,6 +4,7 @@
     Author     : liwenfan
 --%>
 
+<%@page import="entity.MovieFav"%>
 <%@page import="entity.Account"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -30,6 +31,9 @@
         <!-- Page specific CSS links go here -->
         <link rel="stylesheet" href="css/header.css">
         <link rel="stylesheet" href="css/userAccount.css">
+        <link rel="stylesheet" href="css/movieview.css">
+        
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     </head>
     <body>
       <!--[if lt IE 8]>
@@ -82,15 +86,17 @@
            <!--Movie Fav Icon-->
            
            <%
-                String fav = (String)request.getAttribute("UserFaved");
-                if(fav.equals("isFaved")){
+                String checkMovieFav = (String)request.getSession().getAttribute("FavId");
+                if((checkUser!=null)&&(checkMovieFav!=null)){
             %>
-            <a href="MovieFavController?method=get&fav=isFaved&favId=${FavObj}"><img src="img/heartOn.png" alt="isFaved"></a>
+            
+            <a href="MovieFavController?method=get&favId=${FavId}&movieId=${MovieInfo.id}"><img src="img/heartOn.png" alt="isFaved"></a>
            <%
-               }else if(fav.equals("null")){
+               }else if(checkUser==null){
                }else{
            %>
-            <a href="MovieFavController?method=get&fav=isNotFaved&favId=${MovieInfo.id}"><img src="img/heartOff.png" alt="isNotFaved"></a>
+           
+            <a href="MovieFavController?method=get&movieId=${MovieInfo.id}"><img src="img/heartOff.png" alt="isNotFaved"></a>
            <%
                }
            %>
@@ -106,16 +112,19 @@
                <button class="tablinks" onclick="openInfo(event, 'emailp')"><h1>Movie Reviews</h1></button>
                <button class="tablinks" onclick="openInfo(event, 'history')"><h1>Movie Times + Tickets</h1></button>
             </div>
+           <!--Movie Dashboard-->
             <div id="dashboard" class="tabcontent current" >
-                <h3>OverView</h3>
+    
                 <!--Display Basic Info-->
-                <div id="part-bg">
-                    <div id="part-div" class="container">
-                        <span id="part-title">&nbsp; User Name: ${UserInfoSession.userName} &nbsp;
-                                                     ||&nbsp;  
-                                                     Email: ${UserInfoSession.email}</span>
-                    </div>
+                <div class='parent_div_1'><img src="${MovieInfo.cover}" alt="cover"></div>
+                <div class='parent_div_2'>
+                    <h1>${MovieInfo.releaseDate}</h1>
+                    <h1>${MovieInfo.contentRating}</h1>
+                    <h1>${MovieInfo.duration1}</h1>
+                    <h1>${MovieInfo.genres1} ${MovieInfo.genres2} ${MovieInfo.genres3} ${MovieInfo.genres4}</h1>
+                    <a href="${MovieInfo.imdbLink}"><h1>IMDB Score: ${MovieInfo.imdbScore}</h1></a>
                 </div>
+
             </div>
            <!--Change Account Settings-->
             <div id="setting" class="tabcontent">
@@ -143,11 +152,39 @@
                     <button class="btn nav-btn" type="submit" value="register">Save</button>
                 </form>
             </div>
-           <!--Change Email -->
-            <div id="emailp" class="tabcontent">
-                <h3>Email + Preferences</h3>
-                <p>Paris is the capital of France.</p> 
+           <!--Movie Reviews -->
+            <div id="emailp" class="tabcontent reviewcontainer">
+                <h3>Movie Reviews</h3>
+                <!--Write Reviews Header-->
+                <div id="part-bg"class="reviewheader">
+                    <span>TELL US WHAT YOU THINK !</span>
+                </div>
+                <!--Write Reviews Creation-->
+                 <!--change button if user is logged in-->
+            <%
+                if(checkUser!=null){
+            %>
+                <div class="reviewcontent">
+                    
+                    <center><form  action="WriteReviewController" method="post" style="margin-top: 20px">
+                            <h1>Title:</h1><input class="text-input-md" type="text" name="viewTitle" maxlength="50" size="50">
+                            <h1>Body:</h1><textarea class="text-input-md" rows="4" cols="50" name="viewBody" ></textarea>
+                            <button class="btn nav-btn" type="submit" name="movieId" value="${MovieInfo.id}">Submit Review</button>
+                    </form></center>
+                </div>
+            <%
+                }else{
+            %>
+                <div class="reviewcontent">
+                    <center><h1>Login To Write A Movie Review</h1></center>
+                </div>
+            <%
+                }
+            %>
+                
+                   
             </div>
+           <!--Movie Reviews -->
             <div id="history" class="tabcontent">
                 <h3>Purchase History</h3>
                 <p>Tokyo is the capital of Japan.</p>
@@ -158,10 +195,12 @@
        <!--User Account PART-->
        
       <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+     
       <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
       <script src="js/plugins.js"></script>
       <script src="js/main.js"></script>
       <script src="js/bootstrap.js"></script>
       <script src="js/userAccountJs.js"></script>
+      <script src="js/movieReview.js"></script>
     </body>
 </html>

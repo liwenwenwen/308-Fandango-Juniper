@@ -6,8 +6,6 @@
     <class>entity.Movie</class>
     <class>entity.Actor</class>
     <class>entity.MovieFav</class>
-    <class>entity.MovieViews</class>
-    <class>entity.MovieReviews</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/mydb?zeroDateTimeBehavior=convertToNull"/>
