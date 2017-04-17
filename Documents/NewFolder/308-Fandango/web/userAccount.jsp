@@ -3,7 +3,7 @@
     Created on : Apr 8, 2017, 10:14:42 PM
     Author     : liwenfan
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="entity.Account"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
@@ -29,6 +29,7 @@
         
         <!-- Page specific CSS links go here -->
         <link rel="stylesheet" href="css/header.css">
+        <link rel="stylesheet" href="css/movies.css">
         <link rel="stylesheet" href="css/userAccount.css">
     </head>
     <body>
@@ -41,8 +42,8 @@
           <a href="#" id="logo">ELM:Stay Frosty</a>
           <ul class="nav nav-pills ">
             <li>
-              <form action="#">
-                <input id="search-bar" type="text" placeholder="Search">
+              <form action="SearchController" method="post">
+                <input id="search-bar" type="text" name="Search">
               </form>
             </li>
             <li class="dropdown">
@@ -63,7 +64,7 @@
             <%
                 }else{
             %>
-            <li><a class="nav-btn" href="userAccount.jsp">[${UserInfoSession.userName}] Account</a></li>
+            <li><a class="nav-btn" href="<%=request.getContextPath()%>/DisplayUserFavController">[${UserInfoSession.userName}] Account</a></li>
             
             <li><a class="nav-btn" href="<%=request.getContextPath()%>/LogoutController"> Logout</a></li>
             
@@ -85,7 +86,7 @@
            <div class="tab">
                <button class="tablinks" onclick="openInfo(event, 'dashboard')"><h1>Dashboard</h1></button>
                <button class="tablinks" onclick="openInfo(event, 'setting')"><h1>Account Settings</h1></button>
-               <button class="tablinks" onclick="openInfo(event, 'emailp')"><h1>Email + Preferences</h1></button>
+               <button class="tablinks" onclick="openInfo(event, 'emailp')"><h1>My Movies + Theaters</h1></button>
                <button class="tablinks" onclick="openInfo(event, 'history')"><h1>Purchase History</h1></button>
             </div>
             <div id="dashboard" class="tabcontent current" >
@@ -125,11 +126,29 @@
                     <button class="btn nav-btn" type="submit" value="register">Save</button>
                 </form>
             </div>
-           <!--Change Email -->
+           <!--View User Fav -->
             <div id="emailp" class="tabcontent">
-                <h3>Email + Preferences</h3>
-                <p>Paris is the capital of France.</p> 
+                <h3>My Movies + Theaters</h3>
+                <div id="part-bg">
+                    <div id="part-div" class="container">
+                        <span id="part-title">My Movies</span>
+                    </div>
+                </div>
+                <div class="container">
+                <div class="movie-listing">
+                    <!--generate a movie list--> 
+                    <c:forEach var="item" items="${MovieFavList}" >
+                        <a href="MovieDetailsController?method=get&movieId=<c:out value="${item.id}"/>" class="thumbnail movie-thumbnail">
+                        <img class="movie-poster img-responsive noMargin" src="<c:out value="${item.cover}"/>" alt="">
+                        <!--div class="movie-text"-->
+                        <!--span class="movie-title"><c:out value="${item.title}"/></span-->
+                        <!--/div-->
+                        </a>
+                    </c:forEach>
+                </div>
+                </div>
             </div>
+           <!--View User History -->
             <div id="history" class="tabcontent">
                 <h3>Purchase History</h3>
                 <p>Tokyo is the capital of Japan.</p>

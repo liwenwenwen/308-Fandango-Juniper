@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "MovieReviews.findByBody", query = "SELECT m FROM MovieReviews m WHERE m.body = :body")
     , @NamedQuery(name = "MovieReviews.findByUserName", query = "SELECT m FROM MovieReviews m WHERE m.userName = :userName")
     , @NamedQuery(name = "MovieReviews.findByUserIdMovieId", query = "SELECT m FROM MovieReviews m WHERE m.movieId.id =:movieId AND m.userId.id=:userId")
+    , @NamedQuery(name = "MovieReviews.findByMovieId", query = "SELECT m FROM MovieReviews m WHERE m.movieId.id =:movieId")
 })
 public class MovieReviews implements Serializable {
 

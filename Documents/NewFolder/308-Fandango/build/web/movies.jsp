@@ -39,8 +39,8 @@
           <a href="#" id="logo">ELM:Stay Frosty</a>
           <ul class="nav nav-pills ">
             <li>
-              <form action="#">
-                <input id="search-bar" type="text" placeholder="Search">
+              <form action="SearchController" method="post">
+                <input id="search-bar" type="text" name="Search">
               </form>
             </li>
             <li class="dropdown">
@@ -61,7 +61,7 @@
             <%
                 }else{
             %>
-            <li><a class="nav-btn" href="userAccount.jsp">[${UserInfoSession.userName}] Account</a></li>
+            <li><a class="nav-btn" href="<%=request.getContextPath()%>/DisplayUserFavController">[${UserInfoSession.userName}] Account</a></li>
             
             <li><a class="nav-btn" href="<%=request.getContextPath()%>/LogoutController"> Logout</a></li>
             

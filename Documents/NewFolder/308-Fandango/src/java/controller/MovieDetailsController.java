@@ -15,6 +15,7 @@ import javax.persistence.TypedQuery;
 import entity.Account;
 import entity.Movie;
 import entity.MovieFav;
+import entity.MovieReviews;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -53,13 +54,18 @@ public class MovieDetailsController extends HttpServlet {
                     }
                     
                 }
-   
-                //RequestDispatcher rd = request.getRequestDispatcher("movieDetails.jsp");
-                //rd.forward(request, response);
+                /*pre load this movie's reviews*/
+                List<MovieReviews> reviewsResults = makeMovieReviewList(em,movieId);
+                em.close();    
+                /*create session here*/
+                HttpSession movieReviewSession = request.getSession();
+                movieReviewSession.setAttribute("MovieReviewList", reviewsResults);
+
                 response.sendRedirect("movieDetails.jsp");
         
                 
 	}
+    
     public MovieFav checkUserFav(EntityManager em,Integer userId,Integer movieId){
         MovieFav userFaved =null;
         TypedQuery<MovieFav> query = em.createNamedQuery("MovieFav.findByUserIdMovieId", MovieFav.class);
@@ -72,6 +78,12 @@ public class MovieDetailsController extends HttpServlet {
             userFaved = movieFavResults.get(0);
         }
         return userFaved;
+    }
+    public List<MovieReviews> makeMovieReviewList(EntityManager em,Integer movieId){
+        TypedQuery<MovieReviews> query = em.createNamedQuery("MovieReviews.findByMovieId", MovieReviews.class);
+        query.setParameter("movieId", movieId);
+        List<MovieReviews> movieReviewsResults = query.setMaxResults(20).getResultList();
+        return movieReviewsResults;
     }
     
 }

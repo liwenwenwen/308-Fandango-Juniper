@@ -99,6 +99,28 @@
     <url-pattern>/WriteReviewController</url-pattern>
   </servlet-mapping>
   
-  
+  <servlet>
+    <description></description>
+    <display-name>DisplayUserFavController</display-name>
+    <servlet-name>DisplayUserFavController</servlet-name>
+    <servlet-class>controller.DisplayUserFavController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DisplayUserFavController</servlet-name>
+    <url-pattern>/DisplayUserFavController</url-pattern>
+  </servlet-mapping> 
+
+
+  <servlet>
+    <description></description>
+    <display-name>SearchController</display-name>
+    <servlet-name>SearchController</servlet-name>
+    <servlet-class>controller.SearchController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SearchController</servlet-name>
+    <url-pattern>/SearchController</url-pattern>
+  </servlet-mapping> 
+
     
 </web-app>

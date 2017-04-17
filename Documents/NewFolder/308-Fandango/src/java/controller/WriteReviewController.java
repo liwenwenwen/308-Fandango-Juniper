@@ -10,12 +10,9 @@ package controller;
  * @author liwenfan
  */
 import java.io.IOException;
-import javax.persistence.Persistence;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import entity.Account;
 import entity.Movie;
-import entity.MovieFav;
 import entity.MovieReviews;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -74,8 +71,12 @@ public class WriteReviewController extends HttpServlet {
                     em.merge(updateReview);
                     em.getTransaction().commit();
                 }
-                
-                em.close();
+                /*update movie reviews*/
+                List<MovieReviews> reviewsResults = makeMovieReviewList(em,movieId);
+                em.close();    
+                /*create session here*/
+                HttpSession movieReviewSession = request.getSession(false);
+                movieReviewSession.setAttribute("MovieReviewList", reviewsResults);
                 //RequestDispatcher rd = request.getRequestDispatcher("movieDetails.jsp");
                 //rd.forward(request, response);
                 response.sendRedirect("movieDetails.jsp");
@@ -107,6 +108,12 @@ public class WriteReviewController extends HttpServlet {
             userwrote = movieReviewResults.get(0);
         }
         return userwrote;
+    }
+    public List<MovieReviews> makeMovieReviewList(EntityManager em,Integer movieId){
+        TypedQuery<MovieReviews> query = em.createNamedQuery("MovieReviews.findByMovieId", MovieReviews.class);
+        query.setParameter("movieId", movieId);
+        List<MovieReviews> movieReviewsResults = query.setMaxResults(20).getResultList();
+        return movieReviewsResults;
     }
 }
 

@@ -1,10 +1,21 @@
+<%-- 
+    Document   : generalSearch
+    Created on : Apr 16, 2017, 9:21:52 PM
+    Author     : liwenfan
+--%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="java.util.List"%>
+<%@page import="entity.Movie"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="entity.Account"%>
+
 <!doctype html>
 <html class="no-js" lang="">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Register | ELM</title>
+        <title>Movies | ELM</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -19,19 +30,18 @@
         
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Luckiest+Guy|Permanent+Marker" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Luckiest+Guy|Permanent+Marker" rel="stylesheet">
         
         <!-- Page specific CSS links go here -->
         <link rel="stylesheet" href="css/header.css">
-        <link rel="stylesheet" href="css/register.css">
+        <link rel="stylesheet" href="css/movies.css">
     </head>
     <body>
-      <!--[if lt IE 8]>
-          <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-      <![endif]-->
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
 
-      <!-- Navbar -->
-      <div id="header" class="container">
+        <!-- Navbar -->
+        <div id="header" class="container">
           <a href="#" id="logo">ELM:Stay Frosty</a>
           <ul class="nav nav-pills ">
             <li>
@@ -67,24 +77,38 @@
             <!--change button if user is logged in-->
           </ul>
         </div>
-    
-      <!--REGISTER PART-->
-      <form class="container well" action="RegistrationController" method="post" style="margin-top: 20px">
-        <h1>CREATE A NEW ACCOUNT</h1>
-        <h3>User Name</h3>
-        <input class="text-input-sm" type="text" name="username">
-        <h3>Email Address</h3>
-        <input class="text-input-md" type="text" name="email">
-        <h3>Password</h3>
-        <input class="text-input-md" type="password" name="password">
-        <button class="btn nav-btn" type="submit" value="register">Register</button>
-      </form>
-      <!--REGISTER PART-->
+        <!-- /Navbar -->
+        <!-- Title -->
+        <h3>ALL "${SearchTarget}" MOVIE RESULTS</h3>
+        <div id="title-bg">
+         <div id="title-div" class="container">
+           <span id="page-title">MOVIES(${SearchCounts}) Matching "${SearchTarget}"</span>
+         </div>
+        </div>
+        <!-- /Title -->        
+        <!-- Page Content -->
+        <div class="container">
+          <div class="movie-listing">
+            <c:forEach var="item" items="${SearchMovies}" >
+                <a href="MovieDetailsController?method=get&movieId=<c:out value="${item.id}"/>" class="thumbnail movie-thumbnail">
+                 <img class="movie-poster img-responsive noMargin" src="<c:out value="${item.cover}"/>" alt="">
+              <div class="movie-text">
+                <span class="movie-title"><c:out value="${item.title}"/></span>
+                <span class="movie-release"><c:out value="${item.releaseDate}"/></span>
+              </div>
+            </a>
+            </c:forEach>  
+          </div>
+          
+         
+          
+        </div>
 
-      <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-      <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
-      <script src="js/plugins.js"></script>
-      <script src="js/main.js"></script>
-      <script src="js/bootstrap.js"></script>
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/bootstrap.js"></script>
     </body>
 </html>
+

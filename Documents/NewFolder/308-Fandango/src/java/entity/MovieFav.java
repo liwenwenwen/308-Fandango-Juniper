@@ -29,7 +29,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "MovieFav.findAll", query = "SELECT m FROM MovieFav m")
     , @NamedQuery(name = "MovieFav.findById", query = "SELECT m FROM MovieFav m WHERE m.id = :id")
-    , @NamedQuery(name = "MovieFav.findByUserIdMovieId",query = "SELECT m FROM MovieFav m WHERE m.movieId.id =:movieId AND m.userId.id=:userId")})
+    , @NamedQuery(name = "MovieFav.findByUserIdMovieId",query = "SELECT m FROM MovieFav m WHERE m.movieId.id =:movieId AND m.userId.id=:userId")
+    , @NamedQuery(name = "MovieFav.findByUserId",query = "SELECT m FROM MovieFav m WHERE m.userId.id=:userId")
+})
 public class MovieFav implements Serializable {
 
     private static final long serialVersionUID = 1L;

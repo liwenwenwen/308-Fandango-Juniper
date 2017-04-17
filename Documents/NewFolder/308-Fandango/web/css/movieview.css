@@ -32,3 +32,32 @@ and open the template in the editor.
     display: none;
     padding : 5px;
 }
+.reviewTitle-bg {
+  background-color: #FFEF0D; /*light green*/
+
+}
+.reviewheader-yellow{
+    padding: 10px 15px;
+    color: #000;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Roboto Condensed', sans-serif;
+    text-align: center;
+
+}
+.review-border{
+    border: 5px solid #FFEF0D;
+    border-top: none;
+    
+}
+.reviewTitle-author{
+    padding: 5px;
+    font-size:15px;
+    text-align: center;
+}
+.reviewTitle-body{
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size:20px;
+    text-align: center;
+}

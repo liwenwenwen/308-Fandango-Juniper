@@ -3,7 +3,7 @@
     Created on : Apr 12, 2017, 5:46:36 PM
     Author     : liwenfan
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="entity.MovieFav"%>
 <%@page import="entity.Account"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -45,8 +45,8 @@
           <a href="#" id="logo">ELM:Stay Frosty</a>
           <ul class="nav nav-pills ">
             <li>
-              <form action="#">
-                <input id="search-bar" type="text" placeholder="Search">
+              <form action="SearchController" method="post">
+                <input id="search-bar" type="text" name="Search">
               </form>
             </li>
             <li class="dropdown">
@@ -67,7 +67,7 @@
             <%
                 }else{
             %>
-            <li><a class="nav-btn" href="userAccount.jsp">[${UserInfoSession.userName}] Account</a></li>
+            <li><a class="nav-btn" href="<%=request.getContextPath()%>/DisplayUserFavController">[${UserInfoSession.userName}] Account</a></li>
             
             <li><a class="nav-btn" href="<%=request.getContextPath()%>/LogoutController"> Logout</a></li>
             
@@ -118,39 +118,20 @@
                 <!--Display Basic Info-->
                 <div class='parent_div_1'><img src="${MovieInfo.cover}" alt="cover"></div>
                 <div class='parent_div_2'>
+                    <div class="parent_div_center">
                     <h1>${MovieInfo.releaseDate}</h1>
                     <h1>${MovieInfo.contentRating}</h1>
                     <h1>${MovieInfo.duration1}</h1>
                     <h1>${MovieInfo.genres1} ${MovieInfo.genres2} ${MovieInfo.genres3} ${MovieInfo.genres4}</h1>
                     <a href="${MovieInfo.imdbLink}"><h1>IMDB Score: ${MovieInfo.imdbScore}</h1></a>
+                    </div>
                 </div>
 
             </div>
            <!--Change Account Settings-->
             <div id="setting" class="tabcontent">
-                <h3>Account Settings</h3>
-                <!--Change User Name -->
-                <div id="part-bg">
-                    <div id="part-div" class="container">
-                        <span id="part-title">Basic Information</span>
-                    </div>
-                </div>
-                <form action="AccountSettingsController" method="post" style="margin-top: 20px" style="margin-bottom:20px">
-                    <h1>User Name</h1>
-                    <input class="text-input-md" type="text" name="username" value="${UserInfoSession.userName}">
-                    <button class="btn nav-btn" type="submit" value="register">Save</button>
-                </form>
-                <!--Change Password -->
-                <div id="part-bg">
-                    <div id="part-div" class="container">
-                        <span id="part-title">change Password</span>
-                    </div>
-                </div>
-                <form action="AccountSettingsController" method="post" style="margin-top: 20px" style="margin-bottom:20px">
-                    <h1>Password</h1>
-                    <input class="text-input-md" type="text" name="password">
-                    <button class="btn nav-btn" type="submit" value="register">Save</button>
-                </form>
+                <h3>Purchase History</h3>
+                <p>Tokyo is the capital of Japan.</p>
             </div>
            <!--Movie Reviews -->
             <div id="emailp" class="tabcontent reviewcontainer">
@@ -160,7 +141,7 @@
                     <span>TELL US WHAT YOU THINK !</span>
                 </div>
                 <!--Write Reviews Creation-->
-                 <!--change button if user is logged in-->
+                <!--change button if user is logged in-->
             <%
                 if(checkUser!=null){
             %>
@@ -181,7 +162,26 @@
             <%
                 }
             %>
-                
+            <!--Display movie Reviews-->
+            <div class="review-border">
+            <!--generate a movie list-->
+            <c:forEach var="item" items="${MovieReviewList}" >
+              
+                <div class="reviewheader-yellow reviewTitle-bg">  
+                    <span ><c:out value="${item.title}"/></span>
+                </div>
+                <div class="reviewTitle-author">
+                    <span >By <c:out value="${item.userName}"/></span>
+                    <span > Written<c:out value="${item.date}"/></span>
+                </div>
+                <div class="reviewTitle-body" 
+                    <span ><c:out value="${item.body}"/></span>
+                </div>
+            </a>
+            </c:forEach>
+            <!--generate a movie list-->  
+          </div>
+                <!--Display movie Reviews end here-->
                    
             </div>
            <!--Movie Reviews -->
