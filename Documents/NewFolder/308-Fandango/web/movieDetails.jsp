@@ -107,13 +107,13 @@
        </div>
        <div class="container">
            <div class="tab">
-               <button class="tablinks" onclick="openInfo(event, 'dashboard')"><h1>Overview</h1></button>
+               <button class="tablinks" onclick="openInfo(event, 'overview')"><h1>Overview</h1></button>
                <button class="tablinks" onclick="openInfo(event, 'setting')"><h1>Synopsis</h1></button>
-               <button class="tablinks" onclick="openInfo(event, 'emailp')"><h1>Movie Reviews</h1></button>
-               <button class="tablinks" onclick="openInfo(event, 'history')"><h1>Movie Times + Tickets</h1></button>
+               <button class="tablinks" onclick="openInfo(event, 'reviews')"><h1>Movie Reviews</h1></button>
+               <button class="tablinks" onclick="openInfo(event, 'tickets')"><h1>Movie Times + Tickets</h1></button>
             </div>
            <!--Movie Dashboard-->
-            <div id="dashboard" class="tabcontent current" >
+            <div id="overview" class="tabcontent current" >
     
                 <!--Display Basic Info-->
                 <div class='parent_div_1'><img src="${MovieInfo.cover}" alt="cover"></div>
@@ -131,10 +131,10 @@
            <!--Change Account Settings-->
             <div id="setting" class="tabcontent">
                 <h3>Purchase History</h3>
-                <p>Tokyo is the capital of Japan.</p>
+                <p></p>
             </div>
            <!--Movie Reviews -->
-            <div id="emailp" class="tabcontent reviewcontainer">
+            <div id="reviews" class="tabcontent reviewcontainer">
                 <h3>Movie Reviews</h3>
                 <!--Write Reviews Header-->
                 <div id="part-bg"class="reviewheader">
@@ -185,9 +185,9 @@
                    
             </div>
            <!--Movie Reviews -->
-            <div id="history" class="tabcontent">
+            <div id="tickets" class="tabcontent">
                 <h3>Purchase History</h3>
-                <p>Tokyo is the capital of Japan.</p>
+                <p></p>
             </div>
         </div>
         

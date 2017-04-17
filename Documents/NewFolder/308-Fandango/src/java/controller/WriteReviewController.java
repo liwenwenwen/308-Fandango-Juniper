@@ -112,7 +112,7 @@ public class WriteReviewController extends HttpServlet {
     public List<MovieReviews> makeMovieReviewList(EntityManager em,Integer movieId){
         TypedQuery<MovieReviews> query = em.createNamedQuery("MovieReviews.findByMovieId", MovieReviews.class);
         query.setParameter("movieId", movieId);
-        List<MovieReviews> movieReviewsResults = query.setMaxResults(20).getResultList();
+        List<MovieReviews> movieReviewsResults = query.getResultList();
         return movieReviewsResults;
     }
 }

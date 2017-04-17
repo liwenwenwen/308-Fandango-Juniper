@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import servlet.EMF;
+import static source.Constants.DISPLAY_SEARCH_RESULTS;
 
 
 
@@ -51,7 +52,7 @@ public class SearchController extends HttpServlet {
     public List<Movie> searchResults(EntityManager em,String searchTarget){
        TypedQuery<Movie> query = em.createQuery("SELECT m FROM Movie m WHERE m.title LIKE :search", Movie.class);
        query.setParameter("search", "%" + searchTarget + "%");
-       List<Movie> searchedMovies = query.getResultList();
+       List<Movie> searchedMovies = query.setMaxResults(DISPLAY_SEARCH_RESULTS).getResultList();
        
        return searchedMovies;
     }

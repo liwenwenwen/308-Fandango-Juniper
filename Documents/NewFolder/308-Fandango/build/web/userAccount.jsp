@@ -86,7 +86,7 @@
            <div class="tab">
                <button class="tablinks" onclick="openInfo(event, 'dashboard')"><h1>Dashboard</h1></button>
                <button class="tablinks" onclick="openInfo(event, 'setting')"><h1>Account Settings</h1></button>
-               <button class="tablinks" onclick="openInfo(event, 'emailp')"><h1>My Movies + Theaters</h1></button>
+               <button class="tablinks" onclick="openInfo(event, 'myfavs')"><h1>My Movies + Theaters</h1></button>
                <button class="tablinks" onclick="openInfo(event, 'history')"><h1>Purchase History</h1></button>
             </div>
             <div id="dashboard" class="tabcontent current" >
@@ -117,7 +117,7 @@
                 <!--Change Password -->
                 <div id="part-bg">
                     <div id="part-div" class="container">
-                        <span id="part-title">change Password</span>
+                        <span id="part-title">Change Password</span>
                     </div>
                 </div>
                 <form action="AccountSettingsController" method="post" style="margin-top: 20px" style="margin-bottom:20px">
@@ -127,7 +127,7 @@
                 </form>
             </div>
            <!--View User Fav -->
-            <div id="emailp" class="tabcontent">
+            <div id="myfavs" class="tabcontent">
                 <h3>My Movies + Theaters</h3>
                 <div id="part-bg">
                     <div id="part-div" class="container">
@@ -151,7 +151,7 @@
            <!--View User History -->
             <div id="history" class="tabcontent">
                 <h3>Purchase History</h3>
-                <p>Tokyo is the capital of Japan.</p>
+                <p></p>
             </div>
         </div>
         

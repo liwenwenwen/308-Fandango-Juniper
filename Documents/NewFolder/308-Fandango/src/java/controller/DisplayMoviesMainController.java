@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import servlet.EMF;
+import static source.Constants.DISPLAY_MAIN_MOVIES;
 
 public class DisplayMoviesMainController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,7 +39,7 @@ public class DisplayMoviesMainController extends HttpServlet {
     public List<Movie> makeMovieMainList(EntityManager em){
 
         TypedQuery<Movie> query = em.createNamedQuery("Movie.findAll", Movie.class);
-        List<Movie> movieResults = query.setMaxResults(10).getResultList();
+        List<Movie> movieResults = query.setMaxResults(DISPLAY_MAIN_MOVIES).getResultList();
         return movieResults;
     }
     
