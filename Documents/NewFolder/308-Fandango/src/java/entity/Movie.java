@@ -63,6 +63,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Movie.findByImdbScore", query = "SELECT m FROM Movie m WHERE m.imdbScore = :imdbScore")})
 public class Movie implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "smovieId")
+    private Collection<MovieShowings> movieShowingsCollection;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "movieId")
     private Collection<MovieReviews> movieReviewsCollection;
 
@@ -428,6 +431,15 @@ public class Movie implements Serializable {
 
     public void setMovieReviewsCollection(Collection<MovieReviews> movieReviewsCollection) {
         this.movieReviewsCollection = movieReviewsCollection;
+    }
+
+    @XmlTransient
+    public Collection<MovieShowings> getMovieShowingsCollection() {
+        return movieShowingsCollection;
+    }
+
+    public void setMovieShowingsCollection(Collection<MovieShowings> movieShowingsCollection) {
+        this.movieShowingsCollection = movieShowingsCollection;
     }
 
     

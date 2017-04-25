@@ -20,12 +20,10 @@ import javax.servlet.http.HttpSession;
 public class LogoutController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
-       
         HttpSession session=request.getSession();
         session.invalidate();
-
         RequestDispatcher rd = request.getRequestDispatcher("movies.jsp");
-        rd.include(request, response);
+        rd.forward(request, response);
     }
 }
 

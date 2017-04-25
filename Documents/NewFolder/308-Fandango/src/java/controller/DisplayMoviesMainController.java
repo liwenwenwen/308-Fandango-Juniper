@@ -26,18 +26,13 @@ import static source.Constants.DISPLAY_MAIN_MOVIES;
 public class DisplayMoviesMainController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
-	
+                HttpSession movieMainSession = request.getSession();               
                 EntityManager em = EMF.createEntityManager();
                 List<Movie> movieResults = makeMovieMainList(em);
                 em.close();
-                     
-                /*create session here*/
-                HttpSession movieMainSession = request.getSession();
-                movieMainSession.setAttribute("MovieMainList", movieResults);
-              
+                movieMainSession.setAttribute("MovieMainList", movieResults);            
     }
     public List<Movie> makeMovieMainList(EntityManager em){
-
         TypedQuery<Movie> query = em.createNamedQuery("Movie.findAll", Movie.class);
         List<Movie> movieResults = query.setMaxResults(DISPLAY_MAIN_MOVIES).getResultList();
         return movieResults;

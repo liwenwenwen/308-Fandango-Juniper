@@ -24,17 +24,14 @@ public class AccountSettingsController extends HttpServlet {
 		response.setContentType("text/html");
 		String uname = request.getParameter("username");
 		String pass = request.getParameter("password");
-               
                 EntityManager em = EMF.createEntityManager();
-                /*access session*/
-                HttpSession session = request.getSession(false);
+                HttpSession session = request.getSession(true);
+                
                 Account user = (Account)session.getAttribute("UserInfoSession");
                 changeSettings(user,uname,pass);
-
                 em.getTransaction().begin();
                 em.merge(user); 
                 em.getTransaction().commit();
- 
                 em.close();
                      
                 RequestDispatcher rd = request.getRequestDispatcher("userAccount.jsp");
@@ -45,8 +42,6 @@ public class AccountSettingsController extends HttpServlet {
             user.setUserName(uname);
         }else if(pass!=null){
             user.setPassword(pass);
-        }else{
-            
-        }
+        }else{}
     }
 }

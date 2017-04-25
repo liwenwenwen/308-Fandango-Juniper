@@ -47,27 +47,20 @@
               <a class="nav-btn dropdown-toggle" data-toggle="dropdown" href="#">Menu</a>
               <ul class="dropdown-menu nav-dropdown">
                 <li><a href="movies.jsp">Movies</a></li>
-                <li><a href="actors.html">Actors</a></li>
+                <li><a href="DisplayTheatersMainController">Theaters</a></li>
                 <li><a href="news.html">News</a></li>
               </ul>
             </li>
-            <!--<li><a class="nav-btn" href="#">Showtimes</a></li>-->
             <!--change button if user is logged in-->
-            <%
-                Account checkUser = (Account)request.getSession().getAttribute("UserInfoSession");
-                if(checkUser==null){
-            %>
-            <li><a class="nav-btn" href="login.jsp">Login / Register</a></li>
-            <%
-                }else{
-            %>
-            <li><a class="nav-btn" href="<%=request.getContextPath()%>/DisplayUserFavController">[${UserInfoSession.userName}] Account</a></li>
-            
-            <li><a class="nav-btn" href="<%=request.getContextPath()%>/LogoutController"> Logout</a></li>
-            
-            <%
-                }
-            %>
+            <c:choose>
+                <c:when test="${UserInfoSession==null}">            
+                    <li><a class="nav-btn" href="login.jsp">Login / Register</a></li>
+                </c:when>
+                <c:otherwise>
+                    <li><a class="nav-btn" href="DisplayUserFavController">[${UserInfoSession.userName}] Account</a></li>
+                    <li><a class="nav-btn" href="LogoutController"> Logout</a></li>
+                </c:otherwise>        
+            </c:choose>
             <!--change button if user is logged in-->
           </ul>
         </div>
@@ -88,11 +81,11 @@
             
             
             <c:forEach var="item" items="${MovieMainList}" >
-                <a href="MovieDetailsController?method=get&movieId=<c:out value="${item.id}"/>" class="thumbnail movie-thumbnail">
-                 <img class="movie-poster img-responsive noMargin" src="<c:out value="${item.cover}"/>" alt="">
+                <a href="MovieDetailsController?method=get&movieId=${item.id}" class="thumbnail movie-thumbnail">
+                 <img class="movie-poster img-responsive noMargin" src="${item.cover}" alt="">
               <div class="movie-text">
-                <span class="movie-title"><c:out value="${item.title}"/></span>
-                <span class="movie-release"><c:out value="${item.releaseDate}"/></span>
+                <span class="movie-title">${item.title}</span>
+                <span class="movie-release">${item.releaseDate}</span>
               </div>
             </a>
             </c:forEach>

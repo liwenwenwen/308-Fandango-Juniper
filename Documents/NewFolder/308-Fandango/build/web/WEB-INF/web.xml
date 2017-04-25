@@ -121,6 +121,55 @@
     <servlet-name>SearchController</servlet-name>
     <url-pattern>/SearchController</url-pattern>
   </servlet-mapping> 
+  
+  
+  <servlet>
+    <description></description>
+    <display-name>DisplayTheatersMainController</display-name>
+    <servlet-name>DisplayTheatersMainController</servlet-name>
+    <servlet-class>controller.DisplayTheatersMainController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DisplayTheatersMainController</servlet-name>
+    <url-pattern>/DisplayTheatersMainController</url-pattern>
+  </servlet-mapping> 
+
+
+ <servlet>
+    <description></description>
+    <display-name>PurchaseTicketsController</display-name>
+    <servlet-name>PurchaseTicketsController</servlet-name>
+    <servlet-class>controller.PurchaseTicketsController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PurchaseTicketsController</servlet-name>
+    <url-pattern>/PurchaseTicketsController</url-pattern>
+  </servlet-mapping> 
+  
+  
+ <servlet>
+    <description></description>
+    <display-name>PassValuesController</display-name>
+    <servlet-name>PassValuesController</servlet-name>
+    <servlet-class>controller.PassValuesController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PassValuesController</servlet-name>
+    <url-pattern>/PassValuesController</url-pattern>
+  </servlet-mapping> 
+  
+
+   <servlet>
+    <description></description>
+    <display-name>PurchaseTicketsMainController</display-name>
+    <servlet-name>PurchaseTicketsMainController</servlet-name>
+    <servlet-class>controller.PurchaseTicketsMainController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PurchaseTicketsMainController</servlet-name>
+    <url-pattern>/PurchaseTicketsMainController</url-pattern>
+  </servlet-mapping>   
+  
 
     
 </web-app>

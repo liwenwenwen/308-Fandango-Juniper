@@ -26,36 +26,29 @@ import servlet.EMF;
 
 public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
 		response.setContentType("text/html");
-                
 		String uname = request.getParameter("username");
 		String pass = request.getParameter("password");
-		
+                EntityManager em = EMF.createEntityManager();
+                HttpSession userInfoSession = request.getSession();
+                
 		if(uname.isEmpty()||pass.isEmpty())
 		{
                     RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-                    rd.include(request, response);
+                    rd.forward(request, response);
 		}
-
-                EntityManager em = EMF.createEntityManager();
-                /* search User Account with [username and password], both should be correct*/
-                List<Account> checkedUserList = checkUsernamePassword(em,uname,pass);
-                
+                List<Account> checkedUserList = checkUsernamePassword(em,uname,pass);                
                 if(checkedUserList.isEmpty()){
                      em.close();
                      RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-                     rd.include(request, response);
+                     rd.forward(request, response);
                  }else{
-                     Account loginUser =checkedUserList.get(0);
-                     /*create session here*/
-                     HttpSession userInfoSession = request.getSession();
-                     userInfoSession.setAttribute("UserInfoSession", loginUser);
                      em.close();
-                     response.sendRedirect("movies.jsp");
-                 } 
-                
-                
+                     Account loginUser =checkedUserList.get(0);
+                     userInfoSession.setAttribute("UserInfoSession", loginUser);
+                     RequestDispatcher rd = request.getRequestDispatcher("movies.jsp");
+                     rd.forward(request, response);
+                 }       
 	}
     public List<Account> checkUsernamePassword(EntityManager em, String uname, String pass){
        TypedQuery<Account> query = em.createNamedQuery("Account.findByUserNamePassword", Account.class);

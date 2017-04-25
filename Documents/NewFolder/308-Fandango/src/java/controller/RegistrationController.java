@@ -29,32 +29,27 @@ public class RegistrationController extends HttpServlet {
 		String uname = request.getParameter("username");
                 String email=request.getParameter("email");
 		String pass = request.getParameter("password");
-		
+		EntityManager em = EMF.createEntityManager();
+                HttpSession userInfoSession = request.getSession();
+                
 		if(uname.isEmpty()||pass.isEmpty()||email.isEmpty()){
                     RequestDispatcher rd = request.getRequestDispatcher("register.jsp");
                     rd.include(request, response);
-		}else{
-                        
-                    EntityManager em = EMF.createEntityManager();
-                    
+		}else{ 
                     boolean allowToRegister = checkUsernameEmail(em,uname,email);
-                    
                     if(allowToRegister==false){
-                        /*username/email already be registered*/
                         em.close();
                         RequestDispatcher rd = request.getRequestDispatcher("register.jsp");
-                        rd.include(request, response);
+                        rd.forward(request, response);
                     }else{
                         Account newUser = createNewAccount(em,uname,email,pass);
                         em.getTransaction().begin();
                         em.persist(newUser);
                         em.getTransaction().commit();
-                
-                        HttpSession userInfoSession = request.getSession();
-                        userInfoSession.setAttribute("UserInfoSession", newUser);
-                        
                         em.close();
-                        response.sendRedirect("movies.jsp");
+                        userInfoSession.setAttribute("UserInfoSession", newUser);
+                        RequestDispatcher rd = request.getRequestDispatcher("movies.jsp");
+                        rd.forward(request, response);
                     }
                     
             }

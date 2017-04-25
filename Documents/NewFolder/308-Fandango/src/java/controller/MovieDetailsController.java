@@ -16,65 +16,64 @@ import entity.Account;
 import entity.Movie;
 import entity.MovieFav;
 import entity.MovieReviews;
+import entity.MovieSchedules;
+import entity.MovieShowings;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import servlet.EMF;
+import static source.Constants.DEFAULT_THEATER_ID;
+import static source.Constants.DISPLAY_MOVIE_REVIEWS;
 
 public class MovieDetailsController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		int movieId = Integer.parseInt(request.getParameter("movieId"));
-		
                 EntityManager em = EMF.createEntityManager();
-                
+                HttpSession session = request.getSession(true);
+  
                 Movie movieInfo = em.find(Movie.class,movieId);    
-                /*create session here - store movie obj*/
-                HttpSession movieSession = request.getSession(true);
-                movieSession.setAttribute("MovieInfo", movieInfo);
-                /*check if this specific movie is Faved by the user*/
-                HttpSession session = request.getSession(false);
+                session.setAttribute("MovieInfo", movieInfo);
                 Account user = (Account)session.getAttribute("UserInfoSession");
                 if(user!=null){
-                 
-                    // user is logged in, need to check if movie is faved
                     int userId=user.getId();
                     MovieFav userFaved = checkUserFav(em,userId,movieId);
-
-                    if(userFaved==null){
-                        HttpSession favSession = request.getSession(true);
-                        favSession.setAttribute("FavId", null);
+                    if(userFaved==null){    
+                        session.setAttribute("FavId", null);
                     }else{
                         int favId = userFaved.getId();
-                        HttpSession favSession = request.getSession(true);
-                        favSession.setAttribute("FavId",String.valueOf(favId));
-                    }
-                    
+                        session.setAttribute("FavId",String.valueOf(favId));
+                    }    
                 }
-                /*pre load this movie's reviews*/
                 List<MovieReviews> reviewsResults = makeMovieReviewList(em,movieId);
-                em.close();    
-                /*create session here*/
-                HttpSession movieReviewSession = request.getSession();
-                movieReviewSession.setAttribute("MovieReviewList", reviewsResults);
-
-                response.sendRedirect("movieDetails.jsp");
-        
                 
-	}
-    
+                session.setAttribute("MovieReviewList", reviewsResults);
+                /*view today tickets*/
+                Date currentDate = getCurrentDate();
+                session.setAttribute("CurrentDate",currentDate);
+                List<MovieSchedules> movieSchedules =getMovieSchedule(em,movieId,currentDate);
+                session.setAttribute("MovieScheduleList",movieSchedules);
+                
+                em.close(); 
+                RequestDispatcher rd = request.getRequestDispatcher("movieDetails.jsp");
+                rd.forward(request, response);  
+               
+    }   
     public MovieFav checkUserFav(EntityManager em,Integer userId,Integer movieId){
         MovieFav userFaved =null;
         TypedQuery<MovieFav> query = em.createNamedQuery("MovieFav.findByUserIdMovieId", MovieFav.class);
         query.setParameter("userId", userId);
         query.setParameter("movieId",movieId);
         List<MovieFav> movieFavResults = query.getResultList();
-        if(movieFavResults.isEmpty()){
-
-        }else{
+        if(!movieFavResults.isEmpty()){
             userFaved = movieFavResults.get(0);
         }
         return userFaved;
@@ -82,8 +81,54 @@ public class MovieDetailsController extends HttpServlet {
     public List<MovieReviews> makeMovieReviewList(EntityManager em,Integer movieId){
         TypedQuery<MovieReviews> query = em.createNamedQuery("MovieReviews.findByMovieId", MovieReviews.class);
         query.setParameter("movieId", movieId);
-        List<MovieReviews> movieReviewsResults = query.setMaxResults(20).getResultList();
+        List<MovieReviews> movieReviewsResults = query.setMaxResults(DISPLAY_MOVIE_REVIEWS).getResultList();
         return movieReviewsResults;
+    }
+    public Date getCurrentDate(){
+        //SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        //Calendar date = Calendar.getInstance();
+        //String currentDate = format.format(date.getTime());
+        Date currentDate = new Date();
+        return currentDate;
+    }
+    public List<MovieSchedules> getMovieSchedule(EntityManager em,Integer movieId,Date currentDate){
+        int theaterId = DEFAULT_THEATER_ID;
+        int showingId = checkMovieStartandEndDates(em,movieId,theaterId,currentDate);
+        if(showingId!=0){
+            TypedQuery<MovieSchedules> query = em.createNamedQuery("MovieSchedules.findByMovieShwoingIdDate", MovieSchedules.class);
+            query.setParameter("showingId", showingId);
+            query.setParameter("date", currentDate);
+            List<MovieSchedules> movieSchedulesResults=query.getResultList();
+            List<MovieSchedules> schedulesList = checkTicketsLeft(movieSchedulesResults);
+            return schedulesList;
+        }
+        return null;
+    }
+    public Integer checkMovieStartandEndDates(EntityManager em, Integer movieId, Integer theaterId,Date currentDate){
+        TypedQuery<MovieShowings> query = em.createNamedQuery("MovieShowings.findByMovieIdTheaterId", MovieShowings.class);
+        query.setParameter("movieId", movieId);
+        query.setParameter("theaterId", theaterId);
+        List<MovieShowings> movieShowingsResults=query.getResultList();
+        if(movieShowingsResults.isEmpty()){
+            System.out.println("no such movie in this theater");
+        }else{
+            MovieShowings movieShowing = movieShowingsResults.get(0);
+            Date startDate = movieShowing.getPeriodStart();
+            Date endDate = movieShowing.getPeriodEnd();
+            if(currentDate.after(startDate) && currentDate.before(endDate)){
+                return movieShowing.getId();
+            }
+        }
+        return 0;
+    }
+    public List<MovieSchedules> checkTicketsLeft(List<MovieSchedules> movieSchedulesResults){
+        List<MovieSchedules> schedulesList = new ArrayList<MovieSchedules>();
+        for(int i=0;i<movieSchedulesResults.size();i++){
+            if((movieSchedulesResults.get(i).getNumTicketsLeft())>0){
+                schedulesList.add(movieSchedulesResults.get(i));
+            }
+        }
+        return schedulesList;
     }
     
 }

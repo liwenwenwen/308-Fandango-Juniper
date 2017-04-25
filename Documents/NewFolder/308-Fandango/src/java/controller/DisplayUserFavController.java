@@ -27,31 +27,26 @@ import servlet.EMF;
 
 public class DisplayUserFavController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html");
-	
+		response.setContentType("text/html");	
                 EntityManager em = EMF.createEntityManager();
-                /*access session*/
                 HttpSession session = request.getSession(false);
+                HttpSession movieFavSession = request.getSession();
+
                 Account user = (Account)session.getAttribute("UserInfoSession");
                 int userId = user.getId();
                 List<Movie> movieFavList = makeMovieFavList(em,userId);
                 em.close();
-                     
-                /*create session here*/
-                HttpSession movieMainSession = request.getSession();
-                movieMainSession.setAttribute("MovieFavList", movieFavList);
+                movieFavSession.setAttribute("MovieFavList", movieFavList);
                 
                 RequestDispatcher rd = request.getRequestDispatcher("userAccount.jsp");
-                rd.include(request, response);
+                rd.forward(request, response);
               
     }
     public List<Movie> makeMovieFavList(EntityManager em, Integer userId){
-        /*search user faved obj*/
+        List<Movie> movieFavList = new ArrayList<Movie>();
         TypedQuery<MovieFav> query = em.createNamedQuery("MovieFav.findByUserId", MovieFav.class);
         query.setParameter("userId", userId);
         List<MovieFav> movieFavResults = query.getResultList();
-        /*use movieId in faved obj to search whole movie info*/
-        List<Movie> movieFavList = new ArrayList<Movie>();
         for(int i=0;i<movieFavResults.size();i++){
             Movie movieObj = movieFavResults.get(i).getMovieId();
             movieFavList.add(movieObj);

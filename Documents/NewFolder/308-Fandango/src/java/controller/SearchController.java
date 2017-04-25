@@ -28,32 +28,29 @@ import static source.Constants.DISPLAY_SEARCH_RESULTS;
 
 public class SearchController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
 		response.setContentType("text/html");
-		String searchTarget = request.getParameter("Search");    
-                HttpSession searchTargetSession = request.getSession();
-                searchTargetSession.setAttribute("SearchTarget", searchTarget);
+		String searchTarget = request.getParameter("Search");
                 EntityManager em = EMF.createEntityManager();
-                /* search target movies*/
-                List<Movie> searchedMovies = searchResults(em,searchTarget);
-                HttpSession searchSession = request.getSession();
+                HttpSession searchTargetSession = request.getSession();
+                HttpSession searchResultsSession = request.getSession();
                 HttpSession searchCounts = request.getSession();
+                
+                searchTargetSession.setAttribute("SearchTarget", searchTarget);
+                List<Movie> searchedMovies = searchResults(em,searchTarget);
                 if(searchedMovies.isEmpty()){
-                    searchSession.setAttribute("SearchMovies", null);
+                    searchResultsSession.setAttribute("SearchMovies", null);
                     searchCounts.setAttribute("SearchCounts", "0");
                 }else{
-                    searchSession.setAttribute("SearchMovies", searchedMovies);
+                    searchResultsSession.setAttribute("SearchMovies", searchedMovies);
                     searchCounts.setAttribute("SearchCounts", Integer.toString(searchedMovies.size()));                    
                 }
-                    
-                response.sendRedirect("generalSearch.jsp");
-    }
-    
+                RequestDispatcher rd = request.getRequestDispatcher("generalSearch.jsp");
+                rd.forward(request, response);    
+    }  
     public List<Movie> searchResults(EntityManager em,String searchTarget){
        TypedQuery<Movie> query = em.createQuery("SELECT m FROM Movie m WHERE m.title LIKE :search", Movie.class);
        query.setParameter("search", "%" + searchTarget + "%");
-       List<Movie> searchedMovies = query.setMaxResults(DISPLAY_SEARCH_RESULTS).getResultList();
-       
+       List<Movie> searchedMovies = query.setMaxResults(DISPLAY_SEARCH_RESULTS).getResultList();       
        return searchedMovies;
     }
 
