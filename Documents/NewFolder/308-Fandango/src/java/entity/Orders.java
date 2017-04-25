@@ -34,7 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Orders.findById", query = "SELECT o FROM Orders o WHERE o.id = :id")
     , @NamedQuery(name = "Orders.findByEmail", query = "SELECT o FROM Orders o WHERE o.email = :email")
     , @NamedQuery(name = "Orders.findByCreateDate", query = "SELECT o FROM Orders o WHERE o.createDate = :createDate")
-    , @NamedQuery(name = "Orders.findByNumTickets", query = "SELECT o FROM Orders o WHERE o.numTickets = :numTickets")})
+    , @NamedQuery(name = "Orders.findByNumTickets", query = "SELECT o FROM Orders o WHERE o.numTickets = :numTickets")
+    , @NamedQuery(name = "Orders.findByUserId", query = "SELECT o FROM Orders o WHERE o.userId.id=:userId")})
 public class Orders implements Serializable {
 
     private static final long serialVersionUID = 1L;

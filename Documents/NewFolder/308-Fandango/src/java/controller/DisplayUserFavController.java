@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import entity.Movie;
 import entity.MovieFav;
+import entity.Orders;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -29,15 +30,15 @@ public class DisplayUserFavController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");	
                 EntityManager em = EMF.createEntityManager();
-                HttpSession session = request.getSession(false);
-                HttpSession movieFavSession = request.getSession();
+                HttpSession session = request.getSession(true);
 
                 Account user = (Account)session.getAttribute("UserInfoSession");
                 int userId = user.getId();
                 List<Movie> movieFavList = makeMovieFavList(em,userId);
+                List<Orders> orderList = makeOrderList(em,userId);
                 em.close();
-                movieFavSession.setAttribute("MovieFavList", movieFavList);
-                
+                session.setAttribute("MovieFavList", movieFavList);
+                session.setAttribute("OrderList", orderList);
                 RequestDispatcher rd = request.getRequestDispatcher("userAccount.jsp");
                 rd.forward(request, response);
               
@@ -52,6 +53,12 @@ public class DisplayUserFavController extends HttpServlet {
             movieFavList.add(movieObj);
         }
         return movieFavList;
+    }
+    public List<Orders> makeOrderList(EntityManager em,Integer userId){
+        TypedQuery<Orders> query = em.createNamedQuery("Orders.findByUserId", Orders.class);
+        query.setParameter("userId",userId);
+        List<Orders> orderResults = query.getResultList();
+        return orderResults;
     }
     
 }

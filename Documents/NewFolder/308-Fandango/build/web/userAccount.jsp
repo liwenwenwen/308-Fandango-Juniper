@@ -142,7 +142,14 @@
            <!--View User History -->
             <div id="history" class="tabcontent">
                 <h3>Purchase History</h3>
-                <p></p>
+                <c:forEach var="item" items="${OrderList}" >
+                        <a href="OrderDetailsController?method=get&orderId=${item.id}" target="_blank" class="thumbnail movie-thumbnail">
+                            <p>${item.createDate}</p>
+                            <p>${item.numTickets}</p>
+                        
+                        </a>
+                </c:forEach>
+                
             </div>
         </div>
         
