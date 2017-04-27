@@ -3,6 +3,9 @@
    <listener>
         <listener-class>servlet.EMF</listener-class>
     </listener>
+    <listener>
+        <listener-class>servlet.servletListener</listener-class>
+    </listener>
 
     
   <display-name>registration</display-name>
@@ -180,7 +183,20 @@
   <servlet-mapping>
     <servlet-name>OrderDetailsController</servlet-name>
     <url-pattern>/OrderDetailsController</url-pattern>
-  </servlet-mapping>  
+  </servlet-mapping>
+  
+    
+    
+  <servlet>
+    <description></description>
+    <display-name>ScrapHelperController</display-name>
+    <servlet-name>ScrapHelperController</servlet-name>
+    <servlet-class>source.ScrapHelperController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ScrapHelperController</servlet-name>
+    <url-pattern>/ScrapHelperController</url-pattern>
+  </servlet-mapping>    
   
 
     

@@ -12,8 +12,8 @@ import javax.servlet.ServletContextListener;
 
 /**
  *
- * @author liwenfan
- */
+ * @author liwenfan*/
+ 
 
 public class EMF implements ServletContextListener {
 
@@ -38,4 +38,5 @@ public class EMF implements ServletContextListener {
     }
 
 }
+
 
