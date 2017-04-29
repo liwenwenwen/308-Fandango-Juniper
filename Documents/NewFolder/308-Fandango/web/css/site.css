@@ -2,12 +2,12 @@
 /* CSS Document */
 
 body {
-  background-color: #E3FBE2; /*light yellowish green*/
+  background-color: #fff; 
 }
 
 
 #title-bg {
-  background-color: #38B207; /*light green*/
+  background-color: #000; /*light green*/
 }
 
 #title-div{
@@ -19,13 +19,13 @@ body {
 #page-title {
   font-family: 'Permanent Marker', cursive;
   font-family: 'Luckiest Guy', cursive;
-  color: #FFEF0D;
+  color: #fff;
   font-size: 50px;
 }
 
 h1 {
-  font-family: 'Roboto Condensed', sans-serif;
-  color: #38B207; /*deep green*/
+  
+  color: #000; /*deep green*/
   
 }
 

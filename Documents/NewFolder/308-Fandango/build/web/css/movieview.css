@@ -10,16 +10,15 @@ and open the template in the editor.
 
 .reviewcontainer {
     width:100%;
-    border:1px solid #d3d3d3;
     padding: 6px 12px;
-    border: 5px solid #8AFB5E;
+    border: 5px solid #d4d4d4;
     border-top: none;
 }
 .reviewcontainer div {
     width:100%;
 }
 .reviewcontainer .reviewheader {
-    background-color:#d3d3d3;
+    background-color:#d4d4d4;
     padding: 10px 15px;
     cursor: pointer;
     font-weight: bold;
@@ -33,7 +32,7 @@ and open the template in the editor.
     padding : 5px;
 }
 .reviewTitle-bg {
-  background-color: #FFEF0D; /*light green*/
+  background-color: #d4d4d4; /*light green*/
 
 }
 .reviewheader-yellow{
@@ -46,7 +45,7 @@ and open the template in the editor.
 
 }
 .review-border{
-    border: 5px solid #FFEF0D;
+    border: 10px solid #d4d4d4;
     border-top: none;
     
 }

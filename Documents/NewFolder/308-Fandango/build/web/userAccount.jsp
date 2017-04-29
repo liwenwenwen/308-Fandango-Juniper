@@ -11,7 +11,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Account | ELM</title>
+        <title>Account | JUNIPER</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -39,7 +39,7 @@
 
       <!-- Add your site or application content here -->
       <div id="header" class="container">
-          <a href="#" id="logo">ELM:Stay Frosty</a>
+          <a href="movies.jsp" id="logo">JUNIPER</a>
           <ul class="nav nav-pills ">
             <li>
               <form action="SearchController" method="post">
@@ -78,10 +78,10 @@
        </div>
        <div class="container">
            <div class="tab">
-               <button class="tablinks" onclick="openInfo(event, 'dashboard')"><h1>Dashboard</h1></button>
-               <button class="tablinks" onclick="openInfo(event, 'setting')"><h1>Account Settings</h1></button>
-               <button class="tablinks" onclick="openInfo(event, 'myfavs')"><h1>My Movies + Theaters</h1></button>
-               <button class="tablinks" onclick="openInfo(event, 'history')"><h1>Purchase History</h1></button>
+               <button class="tablinks" onclick="openInfo(event, 'dashboard')">Dashboard</button>
+               <button class="tablinks" onclick="openInfo(event, 'setting')">Account Settings</button>
+               <button class="tablinks" onclick="openInfo(event, 'myfavs')">My Movies + Theaters</button>
+               <button class="tablinks" onclick="openInfo(event, 'history')">Purchase History</button>
             </div>
             <div id="dashboard" class="tabcontent current" >
                 <h3>Dashboard</h3>

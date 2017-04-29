@@ -9,7 +9,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Movies | ELM</title>
+        <title>Movies | JUNIPER</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -36,7 +36,7 @@
 
         <!-- Navbar -->
         <div id="header" class="container">
-          <a href="#" id="logo">ELM:Stay Frosty</a>
+          <a href="movies.jsp" id="logo">JUNIPER</a>
           <ul class="nav nav-pills ">
             <li>
               <form action="SearchController" method="post">
@@ -74,7 +74,7 @@
         <!-- /Title -->        
         <!-- Page Content -->
         <div class="container">
-          <h1>Opening this Week</h1>
+          <h1>- In Theaters -</h1>
           <div class="movie-listing">
             <!--generate a movie list-->
             <jsp:include page="/displayMovies.jsp"/>
@@ -96,92 +96,17 @@
             
           </div>
           
-          <h1>In Theaters</h1>
+          <h1>- Coming Soon -</h1>
           <div class="movie-listing">
-            <a href="#" class="thumbnail movie-thumbnail">
-              <img class="movie-poster img-responsive noMargin" src="http://placehold.it/270x400" alt="">
+            <c:forEach var="item" items="${MovieSubList}" >
+                <a href="MovieDetailsController?method=get&movieId=${item.id}" class="thumbnail movie-thumbnail">
+                 <img class="movie-poster img-responsive noMargin" src="${item.cover}" alt="">
               <div class="movie-text">
-                <span class="movie-title">Movie Name</span>
-                <span class="movie-release">12/31/9999</span>
+                <span class="movie-title">${item.title}</span>
+                <span class="movie-release">${item.releaseDate}</span>
               </div>
             </a>
-            <a href="#" class="thumbnail movie-thumbnail">
-              <img class="movie-poster img-responsive noMargin" src="http://placehold.it/270x400" alt="">
-              <div class="movie-text">
-                <span class="movie-title">Movie Name</span>
-                <span class="movie-release">12/31/9999</span>
-              </div>
-            </a>
-            <a href="#" class="thumbnail movie-thumbnail">
-              <img class="movie-poster img-responsive noMargin" src="http://placehold.it/270x400" alt="">
-              <div class="movie-text">
-                <span class="movie-title">Movie Name</span>
-                <span class="movie-release">12/31/9999</span>
-              </div>
-            </a>
-            <a href="#" class="thumbnail movie-thumbnail">
-              <img class="movie-poster img-responsive noMargin" src="http://placehold.it/270x400" alt="">
-              <div class="movie-text">
-                <span class="movie-title">Movie Name</span>
-                <span class="movie-release">12/31/9999</span>
-              </div>
-            </a>
-            <a href="#" class="thumbnail movie-thumbnail">
-              <img class="movie-poster img-responsive noMargin" src="http://placehold.it/270x400" alt="">
-              <div class="movie-text">
-                <span class="movie-title">Movie Name</span>
-                <span class="movie-release">12/31/9999</span>
-              </div>
-            </a>
-            <a href="#" class="thumbnail movie-thumbnail">
-              <img class="movie-poster img-responsive noMargin" src="http://placehold.it/270x400" alt="">
-              <div class="movie-text">
-                <span class="movie-title">Movie Name</span>
-                <span class="movie-release">12/31/9999</span>
-              </div>
-            </a>
-            <a href="#" class="thumbnail movie-thumbnail">
-              <img class="movie-poster img-responsive noMargin" src="http://placehold.it/270x400" alt="">
-              <div class="movie-text">
-                <span class="movie-title">Movie Name</span>
-                <span class="movie-release">12/31/9999</span>
-              </div>
-            </a>
-            <a href="#" class="thumbnail movie-thumbnail">
-              <img class="movie-poster img-responsive noMargin" src="http://placehold.it/270x400" alt="">
-              <div class="movie-text">
-                <span class="movie-title">Movie Name</span>
-                <span class="movie-release">12/31/9999</span>
-              </div>
-            </a>
-            <a href="#" class="thumbnail movie-thumbnail">
-              <img class="movie-poster img-responsive noMargin" src="http://placehold.it/270x400" alt="">
-              <div class="movie-text">
-                <span class="movie-title">Movie Name</span>
-                <span class="movie-release">12/31/9999</span>
-              </div>
-            </a>
-            <a href="#" class="thumbnail movie-thumbnail">
-              <img class="movie-poster img-responsive noMargin" src="http://placehold.it/270x400" alt="">
-              <div class="movie-text">
-                <span class="movie-title">Movie Name</span>
-                <span class="movie-release">12/31/9999</span>
-              </div>
-            </a>
-            <a href="#" class="thumbnail movie-thumbnail">
-              <img class="movie-poster img-responsive noMargin" src="http://placehold.it/270x400" alt="">
-              <div class="movie-text">
-                <span class="movie-title">Movie Name</span>
-                <span class="movie-release">12/31/9999</span>
-              </div>
-            </a>
-            <a href="#" class="thumbnail movie-thumbnail">
-              <img class="movie-poster img-responsive noMargin" src="http://placehold.it/270x400" alt="">
-              <div class="movie-text">
-                <span class="movie-title">Movie Name</span>
-                <span class="movie-release">12/31/9999</span>
-              </div>
-            </a>
+            </c:forEach>
             
           </div>
         </div>

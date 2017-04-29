@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Register | ELM</title>
+        <title>Register | JUNIPER</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -32,7 +32,7 @@
 
       <!-- Navbar -->
       <div id="header" class="container">
-          <a href="#" id="logo">ELM:Stay Frosty</a>
+          <a href="movies.jsp" id="logo">JUNIPER</a>
           <ul class="nav nav-pills ">
             <li>
               <form action="SearchController" method="post">

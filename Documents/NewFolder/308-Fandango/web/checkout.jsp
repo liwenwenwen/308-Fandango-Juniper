@@ -42,7 +42,7 @@
 
         <!-- Navbar -->
         <div id="header" class="container">
-          <a href="#" id="logo">ELM:Stay Frosty</a>
+          <a href="movies.jsp" id="logo">ELM:Stay Frosty</a>
           <ul class="nav nav-pills ">
             <li>
               <form action="SearchController" method="post">

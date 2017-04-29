@@ -17,7 +17,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Movie | ELM</title>
+        <title>Movie | JUNIPER</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -47,7 +47,7 @@
 
       <!-- Add your site or application content here -->
       <div id="header" class="container">
-          <a href="#" id="logo">ELM:Stay Frosty</a>
+          <a href="movies.jsp" id="logo">JUNIPER</a>
           <ul class="nav nav-pills ">
             <li>
               <form action="SearchController" method="post">
@@ -99,38 +99,32 @@
        </div>
        <div class="container">
            <div class="tab">
-               <button class="tablinks" onclick="openInfo(event, 'overview')"><h1>Overview</h1></button>
-               <button class="tablinks" onclick="openInfo(event, 'synopsis')"><h1>Synopsis</h1></button>
-               <button class="tablinks" onclick="openInfo(event, 'reviews')"><h1>Movie Reviews</h1></button>
-               <button class="tablinks" onclick="openInfo(event, 'tickets')"><h1>Movie Times + Tickets</h1></button>
+               <button class="tablinks" onclick="openInfo(event, 'overview')">Overview</button>
+               <button class="tablinks" onclick="openInfo(event, 'reviews')">Movie Reviews</button>
+               <button class="tablinks" onclick="openInfo(event, 'tickets')">Movie Times + Tickets</button>
             </div>
            <!--Movie Dashboard-->
             <div id="overview" class="tabcontent current" >
     
                 <!--Display Basic Info-->
-                <div class='parent_div_1'><img src="${MovieInfo.cover}" alt="cover"></div>
-                <div class='parent_div_2'>
+                <div id='parent_div_1'><img src="${MovieInfo.cover}" style="width: 100%; height: 100%" alt="cover"></div
+                <div id='parent_div_2'>
                     <div class="parent_div_center">
                     <h1>${MovieInfo.releaseDate}</h1>
                     <h1>${MovieInfo.contentRating}</h1>
-                    <h1>${MovieInfo.duration1}</h1>
-                    <h1>${MovieInfo.genres1} ${MovieInfo.genres2} ${MovieInfo.genres3} ${MovieInfo.genres4}</h1>
-                    <a href="${MovieInfo.imdbLink}"><h1>IMDB Score: ${MovieInfo.imdbScore}</h1></a>
-                    </div>
+                    <h1>${MovieInfo.duration}</h1>
+                    <h1>${MovieInfo.synopsis}</h1>
+                   </div>
+               
                 </div>
-
-            </div>
-           <!--Movie Synopsis-->
-            <div id="synopsis" class="tabcontent">
-                <h3>Purchase History</h3>
-                <p></p>
-            </div>
+            
+           
            <!--Movie Reviews -->
             <div id="reviews" class="tabcontent reviewcontainer">
                 <h3>Movie Reviews</h3>
                 <!--Write Reviews Header-->
                 <div id="part-bg"class="reviewheader">
-                    <span>TELL US WHAT YOU THINK !</span>
+                    TELL US WHAT YOU THINK !
                 </div>
                 <!--Write Reviews Creation-->
                 <!--change button if user is logged in-->
@@ -140,7 +134,8 @@
                     
                     <center><form  action="WriteReviewController" method="post" style="margin-top: 20px">
                             <h1>Title:</h1><input class="text-input-md" type="text" name="viewTitle" maxlength="50" size="50">
-                            <h1>Body:</h1><textarea class="text-input-md" rows="4" cols="50" name="viewBody" ></textarea>
+                            <h1>Body:</h1><textarea class="text-input-md" type="text" rows="4" cols="50" name="viewBody" ></textarea>
+                            <br>
                             <button class="btn nav-btn" type="submit" name="movieId" value="${MovieInfo.id}">Submit Review</button>
                     </form></center>
                 </div>

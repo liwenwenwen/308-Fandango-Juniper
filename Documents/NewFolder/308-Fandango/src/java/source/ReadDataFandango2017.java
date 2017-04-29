@@ -5,7 +5,7 @@
 package source;
 
 
-import entity.Test;
+import entity.Movie;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -15,9 +15,13 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -30,6 +34,7 @@ import org.json.simple.parser.ParseException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import servlet.EMF;
+import static source.Constants.FANDANGO_WRITE_READ;
 
 /**
  *
@@ -41,17 +46,24 @@ public class ReadDataFandango2017 {
    
     public static void getJsonData() throws FileNotFoundException, IOException, ParseException, Exception{
         JSONParser parser = new JSONParser();
-        JSONObject a = (JSONObject) parser.parse(new FileReader("/Users/liwenfan/Documents/NewFolder/308-Fandango/src/java/source/fandango-2017.json"));
-        JSONArray array = (JSONArray)a.get("2017movies");
+        JSONObject a = (JSONObject) parser.parse(new FileReader(FANDANGO_WRITE_READ));
+        JSONArray array = (JSONArray)a.get("2017movies"); //2017movies
         EntityManager em = EMF.createEntityManager();
        
         for(Object o : array){
 
             JSONObject newMovie = (JSONObject) o;
-
+            Date date = null;
             String title = (String) newMovie.get("title");
             String cover = (String) newMovie.get("cover");
             String releaseDate = (String) newMovie.get("releaseDate");
+            try{
+                DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH); //d MMMM yyyy
+                date = format.parse(releaseDate);
+            }catch (java.text.ParseException e){
+                date=null;
+            }
+            
             String rating = (String) newMovie.get("rating");
             String duration = (String) newMovie.get("duration");
             String synopsis = (String) newMovie.get("synopsis");
@@ -59,18 +71,18 @@ public class ReadDataFandango2017 {
             /*
             for (Object c : genres){}
             */
-            Test test = new Test();
-            test.setTitle(title);
-            test.setCover(cover);
-            test.setReleaseDate(releaseDate);
-            test.setContentRating(rating);
-            test.setDuration(duration);
-            test.setSynopsis(synopsis);
+            Movie movie = new Movie();
+            movie.setTitle(title);
+            movie.setCover(cover);
+            movie.setReleaseDate(date);
+            movie.setContentRating(rating);
+            movie.setDuration(duration);
+            movie.setSynopsis(synopsis);
   
             em.getTransaction().begin();
-            em.persist(test);
+            em.persist(movie);
             em.getTransaction().commit();
-
+            
            
         }
         em.close();

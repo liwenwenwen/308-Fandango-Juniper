@@ -38,7 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "MovieShowings.findByUnitPrice", query = "SELECT m FROM MovieShowings m WHERE m.unitPrice = :unitPrice")
     , @NamedQuery(name = "MovieShowings.findByPeriodStart", query = "SELECT m FROM MovieShowings m WHERE m.periodStart = :periodStart")
     , @NamedQuery(name = "MovieShowings.findByPeriodEnd", query = "SELECT m FROM MovieShowings m WHERE m.periodEnd = :periodEnd")
-    , @NamedQuery(name = "MovieShowings.findByMovieIdTheaterId", query = "SELECT m FROM MovieShowings m WHERE m.smovieId.id=:movieId AND m.stheaterId.id=:theaterId")})
+    , @NamedQuery(name = "MovieShowings.findByMovieIdTheaterId", query = "SELECT m FROM MovieShowings m WHERE m.smovieId.id=:movieId AND m.stheaterId.id=:theaterId")
+    , @NamedQuery(name = "MovieShowings.findByTwoIDs", query = "SELECT m FROM MovieShowings m WHERE m.id >=:min AND m.id <=:max")})
 public class MovieShowings implements Serializable {
 
     @OneToMany(mappedBy = "showingId")

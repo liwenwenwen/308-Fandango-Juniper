@@ -17,6 +17,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import static source.Constants.FANDANGO_WRITE_READ;
 
 /**
  *
@@ -46,7 +47,7 @@ public class ScrapDataFandango2017 {
     
     public static void scrapFandango(List<String> newMovieList) throws IOException{
         
-        FileWriter file = new FileWriter("/Users/liwenfan/Documents/NewFolder/308-Fandango/src/java/source/fandango-2017.json");
+        FileWriter file = new FileWriter(FANDANGO_WRITE_READ);
         JSONObject movieObject = new JSONObject();
         JSONArray movieObjectArray = new JSONArray();
 
