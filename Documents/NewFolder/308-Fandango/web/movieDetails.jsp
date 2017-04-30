@@ -21,9 +21,10 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <link rel="icon" href="img/ic_movie_filter_black_24dp_1x.png">
         <!-- Place favicon.ico in the root directory -->
-
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
@@ -54,14 +55,16 @@
                 <input id="search-bar" type="text" name="Search">
               </form>
             </li>
-            <li class="dropdown">
+            <!--li class="dropdown">
               <a class="nav-btn dropdown-toggle" data-toggle="dropdown" href="#">Menu</a>
               <ul class="dropdown-menu nav-dropdown">
                 <li><a href="movies.jsp">Movies</a></li>
                 <li><a href="DisplayTheatersMainController">Theaters</a></li>
                 <li><a href="news.html">News</a></li>
               </ul>
-            </li>
+            </li-->
+            <li><a class="nav-btn" href="movies.jsp">Movies</a></li>
+            <li><a class="nav-btn" href="DisplayTheatersMainController">Theaters</a></li>
             <!--<li><a class="nav-btn" href="#">Showtimes</a></li>-->
             <!--change button if user is logged in-->
             <c:choose>
@@ -85,12 +88,12 @@
            <!--Movie Fav Icon-->
            <c:choose>
                 <c:when test="${UserInfoSession!=null && FavId!=null}">   
-                    <a href="MovieFavController?method=get&favId=${FavId}&movieId=${MovieInfo.id}"><img src="img/heartOn.png" alt="isFaved"></a>
+                    <a href="MovieFavController?method=get&favId=${FavId}&movieId=${MovieInfo.id}"><i class="material-icons" style="font-size:40px;color:red;">favorite</i></a>
                 </c:when>
                 <c:when test="${UserInfoSession==null}">
                 </c:when>
                 <c:otherwise>
-                     <a href="MovieFavController?method=get&movieId=${MovieInfo.id}"><img src="img/heartOff.png" alt="isNotFaved"></a>
+                     <a href="MovieFavController?method=get&movieId=${MovieInfo.id}"><i class="material-icons" style="font-size:40px;color:red;">favorite_border</i></a>
                 </c:otherwise>
             </c:choose>
             <!--Movie Fav Icon-->
@@ -105,19 +108,25 @@
             </div>
            <!--Movie Dashboard-->
             <div id="overview" class="tabcontent current" >
-    
+                <h3>Overview</h3>
                 <!--Display Basic Info-->
-                <div id='parent_div_1'><img src="${MovieInfo.cover}" style="width: 100%; height: 100%" alt="cover"></div
-                <div id='parent_div_2'>
-                    <div class="parent_div_center">
-                    <h1>${MovieInfo.releaseDate}</h1>
+                <div class="parent_div_3"><img src="${MovieInfo.cover}" style="width: 100%; height: 100%" alt="cover"></div>
+                <div class="parent_div_4">
+                    <div class="parent_div_center3">
+                    <h3>${MovieInfo.title}</h3>
+                    <h1>Release Date : ${MovieInfo_Date}</h1>
                     <h1>${MovieInfo.contentRating}</h1>
                     <h1>${MovieInfo.duration}</h1>
-                    <h1>${MovieInfo.synopsis}</h1>
-                   </div>
+                    <br>
+                    </div>
+                    <div class="parent_div_center4">
+                    <h1>Synopsis</h1>
+                    <br>
+                    <p>${MovieInfo.synopsis}</p>
+                    </div>
                
                 </div>
-            
+            </div>
            
            <!--Movie Reviews -->
             <div id="reviews" class="tabcontent reviewcontainer">
@@ -169,21 +178,20 @@
                    
             </div>
            <!--Movie Reviews -->
-            <div id="tickets" class="tabcontent">
+            <div id="tickets" class="tabcontent reviewcontainer">
                 
                 <h3>Movie Times + Tickets</h3>
                 <!--viewTimes 7days-->
-                <div id="part-bg"class="reviewheader">
-                    <span>${CurrentDate}</span>
+                <div id="part-bg" class="reviewheader">
+                    <center> [ ${CurrentDate} ] At [ ${TheaterInfo.name} ]</center>
                 </div>
                <!--TAB BODY-->
-               <div>
+               <div class="leavetopspace">
                     <c:forEach var="item" items="${MovieScheduleList}" >
                         <div class="reviewTitle-body">
                             <a href="PassValuesController?method=get&scheduleId=${item.id}">
                             <!--a href="checkout.jsp"-->
-                            <span ><c:out value="${item.time}"/></span>
-                            <span ><c:out value="${item.numTicketsLeft}"/></span>
+                            <span class="btn nav-btn" ><c:out value="${item.time}"/></span>
                             </a>
                         </div>
                     </c:forEach>

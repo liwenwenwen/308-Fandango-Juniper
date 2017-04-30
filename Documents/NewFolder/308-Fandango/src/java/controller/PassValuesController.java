@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import servlet.EMF;
+import static source.Constants.CHECKOUT_TIME_FORMAT;
 import static source.Constants.DEFAULT_THEATER_ID;
 import static source.Constants.DISPLAY_MOVIE_REVIEWS;
 
@@ -39,7 +40,11 @@ public class PassValuesController extends HttpServlet {
 		int scheduleId = Integer.parseInt(request.getParameter("scheduleId"));
                 EntityManager em = EMF.createEntityManager();
                 MovieSchedules ms = em.find(MovieSchedules.class,scheduleId);
+                Date formatDate = ms.getDate();
+                String date = new SimpleDateFormat(CHECKOUT_TIME_FORMAT).format(formatDate);
+                
                 HttpSession session = request.getSession();
+                session.setAttribute("checkoutDate",date);
                 session.setAttribute("schedule", ms);
                 session.setAttribute("numTickets",null);
                 RequestDispatcher rd = request.getRequestDispatcher("checkout.jsp");

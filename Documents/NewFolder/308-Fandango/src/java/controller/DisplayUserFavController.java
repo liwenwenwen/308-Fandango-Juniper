@@ -16,6 +16,7 @@ import javax.persistence.TypedQuery;
 import entity.Movie;
 import entity.MovieFav;
 import entity.Orders;
+import entity.Payments;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -36,9 +37,11 @@ public class DisplayUserFavController extends HttpServlet {
                 int userId = user.getId();
                 List<Movie> movieFavList = makeMovieFavList(em,userId);
                 List<Orders> orderList = makeOrderList(em,userId);
+                Payments payment = paymentResult(em,user);
                 em.close();
                 session.setAttribute("MovieFavList", movieFavList);
                 session.setAttribute("OrderList", orderList);
+                session.setAttribute("Payment",payment);
                 RequestDispatcher rd = request.getRequestDispatcher("userAccount.jsp");
                 rd.forward(request, response);
               
@@ -59,6 +62,11 @@ public class DisplayUserFavController extends HttpServlet {
         query.setParameter("userId",userId);
         List<Orders> orderResults = query.getResultList();
         return orderResults;
+    }
+    public Payments paymentResult(EntityManager em,Account user){
+        Payments payment = user.getPaymentId();
+        return payment;
+
     }
     
 }

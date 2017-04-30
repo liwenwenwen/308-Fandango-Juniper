@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import servlet.EMF;
@@ -55,12 +56,12 @@ public class GenerateSchedules {
         
         for(int i=0;i<scheduleResults.size();i++){
             /* get how many times of showings per day*/
+            Random r = new Random();
             int range = (max - min) + 1;     
-            int showingTimes = (int)(Math.random() * range) + min;
+            int showingTimes = r.nextInt(3)+2;
             /*start time */
             int range2 = (tmax - tmin) + 1;     
             int timeStart = (int)(Math.random() * range2) + tmin;
-            int time = timeStart;
             /* start date */
             Date periodStart = scheduleResults.get(i).getPeriodStart();
             /* showing */
@@ -73,6 +74,7 @@ public class GenerateSchedules {
                 calendar.add(Calendar.DATE, j);
                 Date date = calendar.getTime(); 
                 /* times */
+                int time = timeStart;
                 for(int k=0;k<showingTimes;k++){
                     String strTime = Integer.toString(time);
                     strTime = strTime+":00";

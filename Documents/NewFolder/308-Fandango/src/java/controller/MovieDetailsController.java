@@ -18,6 +18,7 @@ import entity.MovieFav;
 import entity.MovieReviews;
 import entity.MovieSchedules;
 import entity.MovieShowings;
+import entity.Theaters;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import servlet.EMF;
+import static source.Constants.CHECKOUT_TIME_FORMAT;
 import static source.Constants.DEFAULT_THEATER_ID;
 import static source.Constants.DISPLAY_MOVIE_REVIEWS;
 
@@ -40,7 +42,10 @@ public class MovieDetailsController extends HttpServlet {
                 EntityManager em = EMF.createEntityManager();
                 HttpSession session = request.getSession(true);
   
-                Movie movieInfo = em.find(Movie.class,movieId);    
+                Movie movieInfo = em.find(Movie.class,movieId);
+                Date formatDate = movieInfo.getReleaseDate();
+                String date = new SimpleDateFormat(CHECKOUT_TIME_FORMAT).format(formatDate);
+                session.setAttribute("MovieInfo_Date",date);
                 session.setAttribute("MovieInfo", movieInfo);
                 Account user = (Account)session.getAttribute("UserInfoSession");
                 if(user!=null){
@@ -58,10 +63,14 @@ public class MovieDetailsController extends HttpServlet {
                 session.setAttribute("MovieReviewList", reviewsResults);
                 /*view today tickets*/
                 Date currentDate = getCurrentDate();
-                session.setAttribute("CurrentDate",currentDate);
+                String strCurrentDate = new SimpleDateFormat(CHECKOUT_TIME_FORMAT).format(currentDate);
+                session.setAttribute("CurrentDate",strCurrentDate);
                 List<MovieSchedules> movieSchedules =getMovieSchedule(em,movieId,currentDate);
                 session.setAttribute("MovieScheduleList",movieSchedules);
-                
+                /*theater info*/
+                int theaterId = DEFAULT_THEATER_ID;
+                Theaters theater = em.find(Theaters.class,theaterId);
+                session.setAttribute("TheaterInfo",theater);
                 em.close(); 
                 RequestDispatcher rd = request.getRequestDispatcher("movieDetails.jsp");
                 rd.forward(request, response);  

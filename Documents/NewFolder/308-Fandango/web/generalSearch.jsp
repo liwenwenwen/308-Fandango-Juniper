@@ -19,7 +19,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <link rel="icon" href="img/ic_movie_filter_black_24dp_1x.png">
         <!-- Place favicon.ico in the root directory -->
 
         <link rel="stylesheet" href="css/normalize.css">
@@ -49,14 +49,16 @@
                 <input id="search-bar" type="text" name="Search">
               </form>
             </li>
-            <li class="dropdown">
+            <!--li class="dropdown">
               <a class="nav-btn dropdown-toggle" data-toggle="dropdown" href="#">Menu</a>
               <ul class="dropdown-menu nav-dropdown">
                 <li><a href="movies.jsp">Movies</a></li>
                 <li><a href="DisplayTheatersMainController">Theaters</a></li>
                 <li><a href="news.html">News</a></li>
               </ul>
-            </li>
+            </li-->
+            <li><a class="nav-btn" href="movies.jsp">Movies</a></li>
+            <li><a class="nav-btn" href="DisplayTheatersMainController">Theaters</a></li>
             <!--<li><a class="nav-btn" href="#">Showtimes</a></li>-->
             <!--change button if user is logged in-->
            <c:choose>
@@ -73,26 +75,23 @@
         </div>
         <!-- /Navbar -->
         <!-- Title -->
-        <h3>ALL "${SearchTarget}" MOVIE RESULTS</h3>
         <div id="title-bg">
          <div id="title-div" class="container">
            <span id="page-title">MOVIES(${SearchCounts}) Matching "${SearchTarget}"</span>
          </div>
         </div>
-        <%
-            String searchCounts = (String)request.getSession().getAttribute("SearchCounts");
-            if(!(searchCounts).equals("0")){
-        %>
+       
+    <c:choose>
+        <c:when test="${SearchCounts!=0}">   
         <!-- /Title -->        
         <!-- Page Content -->
-        <div class="container">
+        <div class="container" style="margin-top: 20px;">
           <div class="movie-listing">
             <c:forEach var="item" items="${SearchMovies}" >
                 <a href="MovieDetailsController?method=get&movieId=<c:out value="${item.id}"/>" class="thumbnail movie-thumbnail">
                  <img class="movie-poster img-responsive noMargin" src="<c:out value="${item.cover}"/>" alt="">
               <div class="movie-text">
                 <span class="movie-title"><c:out value="${item.title}"/></span>
-                <span class="movie-release"><c:out value="${item.releaseDate}"/></span>
               </div>
             </a>
             </c:forEach>  
@@ -103,9 +102,9 @@
     
           
         </div>
-        <%
-            }
-        %>
+        </c:when>
+    </c:choose>
+       
 
         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>

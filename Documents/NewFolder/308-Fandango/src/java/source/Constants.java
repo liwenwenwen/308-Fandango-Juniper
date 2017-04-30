@@ -13,7 +13,7 @@ public final class Constants {
     private Constants() {
     }
     /* original[0] loadMovie[1] loadShowings[2] loadSchedule[3]*/
-    public static final int TRY_TO_LOAD = 3; 
+    public static final int TRY_TO_LOAD = 0; 
     /* Some constants numbers*/
     public static final int DISPLAY_MAIN_MOVIES = 10;
     public static final int DISPLAY_MAIN_THEATERS =20;
@@ -57,5 +57,6 @@ public final class Constants {
     public static final int MAX_SHOWING_TIMES = 4;
     public static final int MIN_TIME = 9;
     public static final int MAX_TIME = 13;
-    
+    /* time format*/
+    public static final String CHECKOUT_TIME_FORMAT= "EEE, MMM dd yyyy";
 }

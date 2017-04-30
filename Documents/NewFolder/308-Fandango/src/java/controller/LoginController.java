@@ -13,6 +13,7 @@ import java.io.IOException;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import entity.Account;
+import entity.Payments;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -45,6 +46,8 @@ public class LoginController extends HttpServlet {
                  }else{
                      em.close();
                      Account loginUser =checkedUserList.get(0);
+                     Payments payment = loginUser.getPaymentId();
+                     userInfoSession.setAttribute("Payment", payment);
                      userInfoSession.setAttribute("UserInfoSession", loginUser);
                      RequestDispatcher rd = request.getRequestDispatcher("movies.jsp");
                      rd.forward(request, response);

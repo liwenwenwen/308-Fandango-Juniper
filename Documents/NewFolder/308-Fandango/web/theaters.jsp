@@ -19,7 +19,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <link rel="icon" href="img/ic_movie_filter_black_24dp_1x.png">
         <!-- Place favicon.ico in the root directory -->
 
         <link rel="stylesheet" href="css/normalize.css">
@@ -49,14 +49,16 @@
                 <input id="search-bar" type="text" name="Search">
               </form>
             </li>
-            <li class="dropdown">
+            <!--li class="dropdown">
               <a class="nav-btn dropdown-toggle" data-toggle="dropdown" href="#">Menu</a>
               <ul class="dropdown-menu nav-dropdown">
                 <li><a href="movies.jsp">Movies</a></li>
                 <li><a href="DisplayTheatersMainController">Theaters</a></li>
                 <li><a href="news.html">News</a></li>
               </ul>
-            </li>
+            </li-->
+            <li><a class="nav-btn" href="movies.jsp">Movies</a></li>
+            <li><a class="nav-btn" href="DisplayTheatersMainController">Theaters</a></li>
             <!--<li><a class="nav-btn" href="#">Showtimes</a></li>-->
             <!--change button if user is logged in-->
             <c:choose>

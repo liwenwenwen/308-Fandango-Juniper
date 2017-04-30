@@ -102,8 +102,19 @@ h3{
   font-size: 20px;
 }
 
-#parent_div_1,#parent_div_2{
-    width:320px;
+.parent_div_3{
+    width:300px;
+    height:450px;
+    margin-left:50px;
+    margin-right:50px;
+    margin-top:50px;
+    margin-bottom:50px;
+    
+
+    float: left;
+}
+.parent_div_4{
+    width:600px;
     height:450px;
     margin-left:50px;
     margin-right:50px;
@@ -114,16 +125,54 @@ h3{
     float: left;
 }
 
-.parent_div_center{
+.parent_div_center3{
     text-align: center;
     vertical-align: middle;
-    margin-top:100px;
-    margin-right:100px;
+    margin-top:40px;
+    margin-bottom:20px;
+    margin-right:20px;
+    border-bottom: 5px solid #000;
     
+}
+.parent_div_center4{
+    text-align: center;
+    vertical-align: middle;
+    margin-top:20px;
+    margin-right:20px;
     
 }
 
 #div-size{
     width:270px;
     height:600px;
+}
+
+.leavetopspace{
+    margin-top:20px;
+}
+
+#usertitle{
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 3px;
+  margin-top:3px;
+}
+.parent_div_center5{
+    text-align: center;
+    vertical-align: middle;
+    margin-top:40px;
+    margin-bottom:10px;
+    margin-right:20px;
+    
+    
+}
+.parent_div_center6{
+    border-top: 5px solid #000;
+    text-align: center;
+    vertical-align: middle;
+    margin-top:20px;
+    margin-right:20px;
+    margin-bottom: 20px;
+    
 }

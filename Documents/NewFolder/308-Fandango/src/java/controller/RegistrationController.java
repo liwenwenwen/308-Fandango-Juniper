@@ -12,6 +12,8 @@ package controller;
 import java.io.IOException;
 import javax.persistence.EntityManager;
 import entity.Account;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.persistence.TypedQuery;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import servlet.EMF;
+import static source.Constants.CHECKOUT_TIME_FORMAT;
 
 
 
@@ -69,6 +72,9 @@ public class RegistrationController extends HttpServlet {
         
     public Account createNewAccount(EntityManager em,String uname,String email,String pass){
         Account newUser = new Account();
+        Date currentDate = new Date();
+        String strCurrentDate = new SimpleDateFormat(CHECKOUT_TIME_FORMAT).format(currentDate);
+        newUser.setJoinedDate(strCurrentDate);
         newUser.setUserName(uname);
         newUser.setEmail(email);
         newUser.setPassword(pass);
