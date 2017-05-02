@@ -8,6 +8,7 @@ package entity;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,11 +36,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Theaters.findByAddrCity", query = "SELECT t FROM Theaters t WHERE t.addrCity = :addrCity")
     , @NamedQuery(name = "Theaters.findByAddrState", query = "SELECT t FROM Theaters t WHERE t.addrState = :addrState")
     , @NamedQuery(name = "Theaters.findByAddrZipcode", query = "SELECT t FROM Theaters t WHERE t.addrZipcode = :addrZipcode")
-    , @NamedQuery(name = "Theaters.findByIconImage", query = "SELECT t FROM Theaters t WHERE t.iconImage = :iconImage")})
+    , @NamedQuery(name = "Theaters.findByIconImage", query = "SELECT t FROM Theaters t WHERE t.iconImage = :iconImage")
+    , @NamedQuery(name = "Theaters.findByPhoneNum", query = "SELECT t FROM Theaters t WHERE t.phoneNum = :phoneNum")})
 public class Theaters implements Serializable {
 
-    @OneToMany(mappedBy = "stheaterId")
-    private Collection<MovieShowings> movieShowingsCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "theaterId")
+    private Collection<TheaterFav> theaterFavCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -62,6 +64,8 @@ public class Theaters implements Serializable {
     private String addrZipcode;
     @Column(name = "iconImage")
     private String iconImage;
+    @Column(name = "phoneNum")
+    private String phoneNum;
 
     public Theaters() {
     }
@@ -133,6 +137,14 @@ public class Theaters implements Serializable {
         this.iconImage = iconImage;
     }
 
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -159,12 +171,12 @@ public class Theaters implements Serializable {
     }
 
     @XmlTransient
-    public Collection<MovieShowings> getMovieShowingsCollection() {
-        return movieShowingsCollection;
+    public Collection<TheaterFav> getTheaterFavCollection() {
+        return theaterFavCollection;
     }
 
-    public void setMovieShowingsCollection(Collection<MovieShowings> movieShowingsCollection) {
-        this.movieShowingsCollection = movieShowingsCollection;
+    public void setTheaterFavCollection(Collection<TheaterFav> theaterFavCollection) {
+        this.theaterFavCollection = theaterFavCollection;
     }
     
 }

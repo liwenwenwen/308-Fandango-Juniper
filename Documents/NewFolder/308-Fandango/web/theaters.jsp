@@ -21,7 +21,8 @@
 
         <link rel="icon" href="img/ic_movie_filter_black_24dp_1x.png">
         <!-- Place favicon.ico in the root directory -->
-
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
@@ -34,6 +35,7 @@
         <!-- Page specific CSS links go here -->
         <link rel="stylesheet" href="css/header.css">
         <link rel="stylesheet" href="css/movies.css">
+        <link rel="stylesheet" href="css/theaters.css">
     </head>
     <body>
         <!--[if lt IE 8]>
@@ -74,31 +76,43 @@
           </ul>
         </div>
         <!-- /Navbar -->
-        
-        <c:forEach var="item" items="${TheaterMainList}" >
         <!-- Title -->
         <div id="title-bg">
          <div id="title-div" class="container">
-           <span id="page-title">${item.name}</span>
+           <span id="page-title">Theaters</span>
          </div>
         </div>
+        <c:forEach var="item" items="${TheaterMainList}" varStatus="status">
          
            <!-- Page Content -->
-        <div class="container">
-          <div class="movie-listing">
-         
-                <a href="" class="thumbnail movie-thumbnail">
-                    <img class="movie-poster img-responsive noMargin" src="${item.iconImage}" alt="">
-                    <div class="movie-text">
-                        <span class="movie-title">${item.addrStreet}</span>
-                        <span class="movie-release">${item.addrCity}</span>
-                        <span class="movie-release">${item.addrState}</span>
-                        <span class="movie-release">${item.addrZipcode}</span>
-              
-                    </div>
-            </a>
-
-          </div>      
+        
+        <div class ="theater_main_div">
+            <div class="parent_div_7">
+                <img class="movie-poster img-responsive noMargin" src="${item.iconImage}" alt="theaterImg">
+            </div>
+            <div class="parent_div_8">
+                <h1>${item.name}</h1>
+                <span>${item.addrStreet}</span>
+                <span>${item.addrCity}</span>
+                <span>${item.addrState}</span>
+                <span>${item.addrZipcode}</span>
+                <br>
+                <span>${item.phoneNum}</span>
+            </div>
+            <div class="parent_div_9">
+                <div class="center_div_9">
+                <c:choose>
+                <c:when test="${UserInfoSession!=null && TheaterFavList[status.index]=='TF'}"> 
+                    <a href="TheaterFavController?method=get&theaterId=${item.id}"><i class="material-icons" style="font-size:40px;color:red;">favorite</i></a>
+                </c:when>
+                <c:when test="${UserInfoSession==null}">
+                </c:when>
+                <c:otherwise>
+                     <a href="TheaterFavController?method=get&theaterId=${item.id}"><i class="material-icons" style="font-size:40px;color:red;">favorite_border</i></a>
+                </c:otherwise>
+                </c:choose>
+                </div>    
+            </div>
         </div>
          
         </c:forEach> 

@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,9 +16,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,6 +38,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Account.findByJoinedDate", query = "SELECT a FROM Account a WHERE a.joinedDate = :joinedDate")
     , @NamedQuery(name = "Account.findByUserNamePassword", query = "SELECT a FROM Account a WHERE a.userName = :userName AND a.password=:password")})
 public class Account implements Serializable {
+
+    @OneToMany(mappedBy = "userId")
+    private Collection<TheaterFav> theaterFavCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -140,6 +146,15 @@ public class Account implements Serializable {
     @Override
     public String toString() {
         return "entity.Account[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Collection<TheaterFav> getTheaterFavCollection() {
+        return theaterFavCollection;
+    }
+
+    public void setTheaterFavCollection(Collection<TheaterFav> theaterFavCollection) {
+        this.theaterFavCollection = theaterFavCollection;
     }
     
 }

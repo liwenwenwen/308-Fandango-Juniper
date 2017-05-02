@@ -182,21 +182,22 @@
                 
                 <h3>Movie Times + Tickets</h3>
                 <!--viewTimes 7days-->
+                <c:forEach var="item2" items="${MovieScheduleList}"  varStatus="status">
                 <div id="part-bg" class="reviewheader">
-                    <center> [ ${CurrentDate} ] At [ ${TheaterInfo.name} ]</center>
+                    <center> [ ${CurrentDate} ] At [ ${TheaterInfo[status.index].name} ]</center>
                 </div>
                <!--TAB BODY-->
                <div class="leavetopspace">
-                    <c:forEach var="item" items="${MovieScheduleList}" >
+                    <c:forEach var="item" items="${item2}" >
                         <div class="reviewTitle-body">
-                            <a href="PassValuesController?method=get&scheduleId=${item.id}">
+                            <a href="PassValuesController?method=get&scheduleId=${item.id}&selectedTheaterId=${TheaterInfo[status.index].id}">
                             <!--a href="checkout.jsp"-->
                             <span class="btn nav-btn" ><c:out value="${item.time}"/></span>
                             </a>
                         </div>
                     </c:forEach>
                </div>    
-               
+               </c:forEach>
 
             </div>
         </div>

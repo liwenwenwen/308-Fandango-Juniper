@@ -50,6 +50,8 @@ public class RegistrationController extends HttpServlet {
                         em.persist(newUser);
                         em.getTransaction().commit();
                         em.close();
+                        userInfoSession.setAttribute("Payment", null);
+                        userInfoSession.setAttribute("TheaterFavList", null);
                         userInfoSession.setAttribute("UserInfoSession", newUser);
                         RequestDispatcher rd = request.getRequestDispatcher("movies.jsp");
                         rd.forward(request, response);

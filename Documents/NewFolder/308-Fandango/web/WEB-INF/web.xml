@@ -196,6 +196,17 @@
   <servlet-mapping>
     <servlet-name>ScrapHelperController</servlet-name>
     <url-pattern>/ScrapHelperController</url-pattern>
+  </servlet-mapping> 
+  
+  <servlet>
+    <description></description>
+    <display-name>TheaterFavController</display-name>
+    <servlet-name>TheaterFavController</servlet-name>
+    <servlet-class>controller.TheaterFavController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TheaterFavController</servlet-name>
+    <url-pattern>/TheaterFavController</url-pattern>
   </servlet-mapping>    
   
 

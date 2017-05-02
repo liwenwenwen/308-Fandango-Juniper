@@ -18,6 +18,7 @@ import entity.MovieFav;
 import entity.MovieReviews;
 import entity.MovieSchedules;
 import entity.MovieShowings;
+import entity.Theaters;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,8 +39,10 @@ public class PassValuesController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		int scheduleId = Integer.parseInt(request.getParameter("scheduleId"));
+                int selectedTheaterId = Integer.parseInt(request.getParameter("selectedTheaterId"));
                 EntityManager em = EMF.createEntityManager();
                 MovieSchedules ms = em.find(MovieSchedules.class,scheduleId);
+                Theaters selectedTheater = em.find(Theaters.class,selectedTheaterId);
                 Date formatDate = ms.getDate();
                 String date = new SimpleDateFormat(CHECKOUT_TIME_FORMAT).format(formatDate);
                 
@@ -47,6 +50,7 @@ public class PassValuesController extends HttpServlet {
                 session.setAttribute("checkoutDate",date);
                 session.setAttribute("schedule", ms);
                 session.setAttribute("numTickets",null);
+                session.setAttribute("selectedTheater",selectedTheater);
                 RequestDispatcher rd = request.getRequestDispatcher("checkout.jsp");
                 rd.forward(request, response);
     }

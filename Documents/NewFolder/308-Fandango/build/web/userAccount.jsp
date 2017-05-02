@@ -199,9 +199,10 @@
                 <div class="container">
                 <div class="movie-listing">
                     <!--generate a movie list--> 
-                    <c:forEach var="item" items="${TheaterFavList}" >
-                        <a href="MovieDetailsController?method=get&movieId=${item.id}" class="thumbnail movie-thumbnail">
-                        <img class="movie-poster img-responsive noMargin" src="${item.cover}" alt="">
+                    <c:forEach var="item" items="${TheaterFavMainList}" >
+                        <a href="DisplayTheatersMainController?method=get" class="thumbnail movie-thumbnail">
+                        <img class="movie-poster img-responsive noMargin" src="${item.iconImage}" alt="">
+                        <h1>${item.name}</h1>
                         </a>
                     </c:forEach>
                 </div>

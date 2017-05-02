@@ -24,13 +24,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author liwenfan
  */
 @Entity
-@Table(name = "Actor")
+@Table(name = "TheaterFav")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Actor.findAll", query = "SELECT a FROM Actor a")
-    , @NamedQuery(name = "Actor.findById", query = "SELECT a FROM Actor a WHERE a.id = :id")
-    , @NamedQuery(name = "Actor.findByActor", query = "SELECT a FROM Actor a WHERE a.actor = :actor")})
-public class Actor implements Serializable {
+    @NamedQuery(name = "TheaterFav.findAll", query = "SELECT t FROM TheaterFav t")
+    , @NamedQuery(name = "TheaterFav.findById", query = "SELECT t FROM TheaterFav t WHERE t.id = :id")
+    , @NamedQuery(name = "TheaterFav.findByUserId", query = "SELECT t FROM TheaterFav t WHERE t.userId.id = :userId")
+    , @NamedQuery(name = "TheaterFav.findByUserIdTheaterId", query = "SELECT t FROM TheaterFav t WHERE t.userId.id = :userId AND t.theaterId.id = :theaterId")})
+public class TheaterFav implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -38,16 +39,17 @@ public class Actor implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "actor")
-    private String actor;
-    @JoinColumn(name = "movieId", referencedColumnName = "id")
+    @JoinColumn(name = "theaterId", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Theaters theaterId;
+    @JoinColumn(name = "userId", referencedColumnName = "id")
     @ManyToOne
-    private Movie movieId;
+    private Account userId;
 
-    public Actor() {
+    public TheaterFav() {
     }
 
-    public Actor(Integer id) {
+    public TheaterFav(Integer id) {
         this.id = id;
     }
 
@@ -59,20 +61,20 @@ public class Actor implements Serializable {
         this.id = id;
     }
 
-    public String getActor() {
-        return actor;
+    public Theaters getTheaterId() {
+        return theaterId;
     }
 
-    public void setActor(String actor) {
-        this.actor = actor;
+    public void setTheaterId(Theaters theaterId) {
+        this.theaterId = theaterId;
     }
 
-    public Movie getMovieId() {
-        return movieId;
+    public Account getUserId() {
+        return userId;
     }
 
-    public void setMovieId(Movie movieId) {
-        this.movieId = movieId;
+    public void setUserId(Account userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -85,10 +87,10 @@ public class Actor implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Actor)) {
+        if (!(object instanceof TheaterFav)) {
             return false;
         }
-        Actor other = (Actor) object;
+        TheaterFav other = (TheaterFav) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -97,7 +99,7 @@ public class Actor implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Actor[ id=" + id + " ]";
+        return "entity.TheaterFav[ id=" + id + " ]";
     }
     
 }

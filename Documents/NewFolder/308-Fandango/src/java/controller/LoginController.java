@@ -14,6 +14,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import entity.Account;
 import entity.Payments;
+import entity.TheaterFav;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -44,11 +46,14 @@ public class LoginController extends HttpServlet {
                      RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
                      rd.forward(request, response);
                  }else{
-                     em.close();
+                     
                      Account loginUser =checkedUserList.get(0);
                      Payments payment = loginUser.getPaymentId();
                      userInfoSession.setAttribute("Payment", payment);
+                     List<String> theaterFavForIcon = checkUserTheaterFav(em,loginUser);
+                     userInfoSession.setAttribute("TheaterFavList", theaterFavForIcon);
                      userInfoSession.setAttribute("UserInfoSession", loginUser);
+                     em.close();
                      RequestDispatcher rd = request.getRequestDispatcher("movies.jsp");
                      rd.forward(request, response);
                  }       
@@ -59,6 +64,22 @@ public class LoginController extends HttpServlet {
        query.setParameter("password",pass);
        List<Account> accResults = query.getResultList();
        return accResults;
+    }
+    public List<String> checkUserTheaterFav(EntityManager em,Account loginUser){
+       TypedQuery<TheaterFav> query = em.createNamedQuery("TheaterFav.findByUserId", TheaterFav.class);
+       int userId = loginUser.getId();
+       query.setParameter("userId", userId);
+       List<TheaterFav> theaterFavtemp = query.getResultList();
+       List<String> theaterFav = new ArrayList<String>();
+       for(int i=0;i<5;i++){
+           theaterFav.add("TNF");
+           for(int j=0;j<theaterFavtemp.size();j++){
+               if(theaterFavtemp.get(j).getTheaterId().getId()==(i+1)){
+                   theaterFav.set(i,"TF");
+               }
+           }
+       }
+       return theaterFav;
     }
     
 }

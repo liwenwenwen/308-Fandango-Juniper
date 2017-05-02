@@ -1,0 +1,48 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : May 1, 2017, 5:47:10 PM
+    Author     : liwenfan
+*/
+.theater_main_div{
+    margin-left:120px;
+    margin-top:20px;
+    margin-bottom:20px;
+    width:1100px;
+    height:200px;
+    border-bottom:5px solid #d4d4d4;
+    border-top: 5px solid #d4d4d4;
+    border-left:5px solid #d4d4d4;
+    border-right:5px solid #d4d4d4;
+}
+.parent_div_7{
+    background-color: #d4d4d4;
+    width:300px;
+    height:100px;
+    margin-left:5px;
+    margin-right:20px;
+    margin-top:40px;
+    margin-bottom:10px;
+    float: left;
+}
+.parent_div_8{
+    width:550px;
+    height:195px;
+    margin-top:10px;
+    margin-left:50px;
+    float: left;
+}
+.parent_div_9{
+    background-color: #d4d4d4;
+    width:100px;
+    height:195px;
+    float: right;    
+}
+
+.center_div_9{
+    margin-top:80px;
+    margin-left:35px;
+}

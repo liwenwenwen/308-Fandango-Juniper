@@ -18,6 +18,7 @@ import entity.MovieFav;
 import entity.MovieReviews;
 import entity.MovieSchedules;
 import entity.MovieShowings;
+import entity.TheaterFav;
 import entity.Theaters;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -65,12 +66,13 @@ public class MovieDetailsController extends HttpServlet {
                 Date currentDate = getCurrentDate();
                 String strCurrentDate = new SimpleDateFormat(CHECKOUT_TIME_FORMAT).format(currentDate);
                 session.setAttribute("CurrentDate",strCurrentDate);
-                List<MovieSchedules> movieSchedules =getMovieSchedule(em,movieId,currentDate);
+                List<Theaters> theaterInfoList = new ArrayList<Theaters>();
+                List<List<MovieSchedules>> movieSchedules =getMovieSchedule(em,user,theaterInfoList,movieId,currentDate);
                 session.setAttribute("MovieScheduleList",movieSchedules);
                 /*theater info*/
                 int theaterId = DEFAULT_THEATER_ID;
                 Theaters theater = em.find(Theaters.class,theaterId);
-                session.setAttribute("TheaterInfo",theater);
+                session.setAttribute("TheaterInfo",theaterInfoList);
                 em.close(); 
                 RequestDispatcher rd = request.getRequestDispatcher("movieDetails.jsp");
                 rd.forward(request, response);  
@@ -100,16 +102,47 @@ public class MovieDetailsController extends HttpServlet {
         Date currentDate = new Date();
         return currentDate;
     }
-    public List<MovieSchedules> getMovieSchedule(EntityManager em,Integer movieId,Date currentDate){
-        int theaterId = DEFAULT_THEATER_ID;
-        int showingId = checkMovieStartandEndDates(em,movieId,theaterId,currentDate);
-        if(showingId!=0){
-            TypedQuery<MovieSchedules> query = em.createNamedQuery("MovieSchedules.findByMovieShwoingIdDate", MovieSchedules.class);
-            query.setParameter("showingId", showingId);
-            query.setParameter("date", currentDate);
-            List<MovieSchedules> movieSchedulesResults=query.getResultList();
-            List<MovieSchedules> schedulesList = checkTicketsLeft(movieSchedulesResults);
-            return schedulesList;
+    public List<List<MovieSchedules>> getMovieSchedule(EntityManager em,Account user,List<Theaters> theaterInfoList, Integer movieId,Date currentDate){
+        List<TheaterFav> userTheaterFavList=new ArrayList<TheaterFav>();
+        List<Integer> showingIdList = new ArrayList<Integer>();
+        if(user!=null){
+            TypedQuery<TheaterFav> query = em.createNamedQuery("TheaterFav.findByUserId", TheaterFav.class);
+            query.setParameter("userId", user.getId());
+            userTheaterFavList=query.getResultList();
+        }
+        int theaterId;
+        int showingId;
+        if(userTheaterFavList.isEmpty()){
+            /* default*/
+            theaterId = DEFAULT_THEATER_ID;
+            showingId = checkMovieStartandEndDates(em,movieId,theaterId,currentDate);
+            showingIdList.add(showingId);
+            theaterInfoList.add(em.find(Theaters.class,theaterId));
+        }else{
+            /* user has faved theaters*/
+            for(int i=0;i<userTheaterFavList.size();i++){
+                theaterId = userTheaterFavList.get(i).getTheaterId().getId();
+                showingId = checkMovieStartandEndDates(em,movieId,theaterId,currentDate);
+                if(showingId!=0){
+                    showingIdList.add(showingId);
+                    theaterInfoList.add(em.find(Theaters.class,theaterId));
+                }    
+            }
+        }
+        
+        
+        if(!showingIdList.isEmpty()){
+            List<List<MovieSchedules>> mainSchedulesList = new ArrayList<List<MovieSchedules>>();
+            for(int j=0;j<showingIdList.size();j++){
+                int showId = showingIdList.get(j);
+                TypedQuery<MovieSchedules> query = em.createNamedQuery("MovieSchedules.findByMovieShwoingIdDate", MovieSchedules.class);
+                query.setParameter("showingId", showId);
+                query.setParameter("date", currentDate);
+                List<MovieSchedules> movieSchedulesResults=query.getResultList();
+                List<MovieSchedules> schedulesList = checkTicketsLeft(movieSchedulesResults);
+                mainSchedulesList.add(schedulesList);
+            }
+            return mainSchedulesList;
         }
         return null;
     }

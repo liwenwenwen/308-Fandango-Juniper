@@ -17,6 +17,8 @@ import entity.Movie;
 import entity.MovieFav;
 import entity.Orders;
 import entity.Payments;
+import entity.TheaterFav;
+import entity.Theaters;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -38,10 +40,12 @@ public class DisplayUserFavController extends HttpServlet {
                 List<Movie> movieFavList = makeMovieFavList(em,userId);
                 List<Orders> orderList = makeOrderList(em,userId);
                 Payments payment = paymentResult(em,user);
+                List<Theaters> theaters = makeTheaterFavList(em,userId);
                 em.close();
                 session.setAttribute("MovieFavList", movieFavList);
                 session.setAttribute("OrderList", orderList);
                 session.setAttribute("Payment",payment);
+                session.setAttribute("TheaterFavMainList",theaters);
                 RequestDispatcher rd = request.getRequestDispatcher("userAccount.jsp");
                 rd.forward(request, response);
               
@@ -67,6 +71,18 @@ public class DisplayUserFavController extends HttpServlet {
         Payments payment = user.getPaymentId();
         return payment;
 
+    }
+    public List<Theaters> makeTheaterFavList(EntityManager em,Integer userId){
+       List<Theaters> theaterFavList = new ArrayList<Theaters>();
+       TypedQuery<TheaterFav> query = em.createNamedQuery("TheaterFav.findByUserId", TheaterFav.class);
+       query.setParameter("userId", userId);
+       List<TheaterFav> theaterFavResults = query.getResultList();
+       for(int i=0;i<theaterFavResults.size();i++){
+            Theaters theaterObj = theaterFavResults.get(i).getTheaterId();
+            theaterFavList.add(theaterObj);
+        }
+
+       return theaterFavList;
     }
     
 }

@@ -144,8 +144,8 @@
             
             <h3>- ${MovieInfo.title} -</h3>
             <h3>${schedule.time}, ${checkoutDate}</h3>
-            <h3>${TheaterInfo.name}</h3>
-            <p>( ${TheaterInfo.addrStreet},${TheaterInfo.addrCity},${TheaterInfo.addrState},${TheaterInfo.addrZipcode} )</p>
+            <h3>${selectedTheater.name}</h3>
+            <p>( ${selectedTheater.addrStreet},${selectedTheater.addrCity},${selectedTheater.addrState},${selectedTheater.addrZipcode} )</p>
             <div class="parent_div_center2">
                 <h3 class="barcode">Unit Price:    $${unitPrice}</h3>
                 <h3 class="barcode">${numTickets} x $${unitPrice} = $${TotalPrice}</h3>
