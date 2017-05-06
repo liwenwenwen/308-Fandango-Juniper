@@ -117,6 +117,13 @@
                     <h1>Release Date : ${MovieInfo_Date}</h1>
                     <h1>${MovieInfo.contentRating}</h1>
                     <h1>${MovieInfo.duration}</h1>
+                    <c:if test="${not empty ThisMovieGenres}">
+                        <h1 class="h1-inline">|</h1>
+                    </c:if>
+                    <c:forEach var="item" items="${ThisMovieGenres}" >
+                        <h1 class="h1-inline"> ${item} |</h1>
+                    </c:forEach>
+                    <br>
                     <br>
                     </div>
                     <div class="parent_div_center4">

@@ -12,11 +12,13 @@ package source;
 public final class Constants {
     private Constants() {
     }
-    /* original[0] loadMovie[1] loadShowings[2] loadSchedule[3]*/
+    /* original[0] loadMovie[1] loadShowings[2] loadSchedule[3] loadGenreNames2017[4] loadGenreNames2016[5]
+       loadGenrewithMovie2017[6] loadGenrewithMovie2016[7]*/
     public static final int TRY_TO_LOAD = 0; 
     /* Some constants numbers*/
     public static final int DISPLAY_MAIN_MOVIES = 10;
     public static final int DISPLAY_MAIN_THEATERS =20;
+    public static final int DISPLAY_GENRE_RESULTS = 40;
     public static final int DISPLAY_SEARCH_RESULTS = 20;
     public static final int DISPLAY_MOVIE_REVIEWS = 10;
     public static final int DISPLAY_MOVIE_FAVED = 5;
@@ -59,4 +61,8 @@ public final class Constants {
     public static final int MAX_TIME = 13;
     /* time format*/
     public static final String CHECKOUT_TIME_FORMAT= "EEE, MMM dd yyyy";
+    public static final String ORDER_TIME_FORMAT="MMM dd yyyy";
+    /* movie genres */
+    public static final String G_MOVIE_DATE_FROM = "January 1, 2016";
+    public static final String G_MOVIE_DATE_TO = "May 15, 2017";
 }

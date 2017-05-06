@@ -13,6 +13,8 @@ import java.io.IOException;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import entity.Account;
+import entity.GenreNames;
+import entity.Genres;
 import entity.Movie;
 import entity.MovieFav;
 import entity.MovieReviews;
@@ -73,6 +75,9 @@ public class MovieDetailsController extends HttpServlet {
                 int theaterId = DEFAULT_THEATER_ID;
                 Theaters theater = em.find(Theaters.class,theaterId);
                 session.setAttribute("TheaterInfo",theaterInfoList);
+                /* moive gener*/
+                List<String> genreList = getGenresList(em,movieId);
+                session.setAttribute("ThisMovieGenres",genreList);
                 em.close(); 
                 RequestDispatcher rd = request.getRequestDispatcher("movieDetails.jsp");
                 rd.forward(request, response);  
@@ -96,9 +101,6 @@ public class MovieDetailsController extends HttpServlet {
         return movieReviewsResults;
     }
     public Date getCurrentDate(){
-        //SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        //Calendar date = Calendar.getInstance();
-        //String currentDate = format.format(date.getTime());
         Date currentDate = new Date();
         return currentDate;
     }
@@ -113,11 +115,23 @@ public class MovieDetailsController extends HttpServlet {
         int theaterId;
         int showingId;
         if(userTheaterFavList.isEmpty()){
-            /* default*/
+            /* default - display all five theaters*/
+            /*
             theaterId = DEFAULT_THEATER_ID;
             showingId = checkMovieStartandEndDates(em,movieId,theaterId,currentDate);
             showingIdList.add(showingId);
             theaterInfoList.add(em.find(Theaters.class,theaterId));
+            */
+            TypedQuery<Theaters> query = em.createNamedQuery("Theaters.findAll", Theaters.class);
+            List<Theaters> allTheatersList=query.getResultList();
+            for(int j=0;j<allTheatersList.size();j++){
+                theaterId = allTheatersList.get(j).getId();
+                showingId = checkMovieStartandEndDates(em,movieId,theaterId,currentDate);
+                if(showingId!=0){
+                    showingIdList.add(showingId);
+                    theaterInfoList.add(em.find(Theaters.class,theaterId));
+                }    
+            }
         }else{
             /* user has faved theaters*/
             for(int i=0;i<userTheaterFavList.size();i++){
@@ -172,6 +186,17 @@ public class MovieDetailsController extends HttpServlet {
         }
         return schedulesList;
     }
-    
+    public List<String> getGenresList(EntityManager em, Integer movieId){
+        List<String> strMovieGenres = new ArrayList<String>();
+        TypedQuery<Genres> query = em.createNamedQuery("Genres.findByMovieId", Genres.class);
+        query.setParameter("movieId", movieId);
+        List<Genres> movieGenresResults=query.getResultList();
+        for(int i=0;i<movieGenresResults.size();i++){
+            GenreNames genreNames = movieGenresResults.get(i).getGenreId();
+            String mg = genreNames.getGenreName();
+            strMovieGenres.add(mg);
+        }
+        return strMovieGenres;
+    }
 }
 

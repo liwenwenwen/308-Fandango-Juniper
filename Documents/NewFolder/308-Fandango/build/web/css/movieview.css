@@ -60,3 +60,6 @@ and open the template in the editor.
     font-size:20px;
     text-align: center;
 }
+.h1-inline{
+    display:inline;
+}

@@ -212,27 +212,30 @@
             <div id="history" class="tabcontent reviewcontainer">
                 <h3>Purchase History</h3>
                 <c:choose>
-                    <c:when test="${OrderList!=null}">
+                    <c:when test="${not empty OrderList}">
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover">
+                        <table class="table table-striped table-bordered table-hover" style="">
                             <thead>
                                 <tr>
                                 <th>Order#</th>
                                 <th>Create Date</th>
                                 <th>Tickets#</th>
+                                <th>Order Details</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
                                 <c:forEach var="item" items="${OrderList}" >
-                                    <a href="OrderDetailsController?method=get&orderId=${item.id}" target="_blank" class="thumbnail movie-thumbnail">
-                                        <td># {item.id}</td>
+                                    
+                                <tr>
+                                        <td># ${item.id}</td>
                                         <td>${item.createDate}</td>
                                         <td>${item.numTickets}</td>
-                                    </a>
-                                </c:forEach>
+                                        <td><a class="btn nav-btn" href="OrderDetailsController?method=get&orderId=${item.id}" target="_blank">Details</a></td>
+                                     
                                 </tr>
+                              
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div>

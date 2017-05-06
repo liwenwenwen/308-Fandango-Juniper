@@ -34,6 +34,7 @@
         <!-- Page specific CSS links go here -->
         <link rel="stylesheet" href="css/header.css">
         <link rel="stylesheet" href="css/movies.css">
+        <link rel="stylesheet" href="css/orderDetails.css">
     </head>
     <body>
         <!--[if lt IE 8]>
@@ -82,16 +83,61 @@
         </div>
         <!-- /Title -->        
         <!-- Page Content -->
+        <!--Movie Dashboard-->
         <div class="container">
-            <p>${OrderOrder.email}</p>
-            <p>Date: ${OrderSchedule.date} ${OrderSchedule.time}</p>
-            <p>Movie: ${OrderMovie.title}</p>
-            <p>Theater: ${OrderTheater.name}</p>
-            <p>Number of Ticket: ${OrderOrder.numTickets}</p>
-            <p>Unit Price: ${OrderShowing.unitPrice}</p>
-            <p>Total: ${OrderPrice}</p>
-      
+            <div class="mainorderdiv">
+                <!--Display Basic Info-->
+                <div class="parent_div_10">
+                    <a href="MovieDetailsController?method=get&movieId=${OrderMovie.id}">
+                        <img src="${OrderMovie.cover}" style="width: 230px; height: 350px" alt="cover">
+                    </a>
+                </div>
+                <div class="parent_div_11">
+                    <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover" style="">
+                            <tbody>
+                                <tr>
+                                <td>Email</td>
+                                <td>${OrderOrder.email}</td>   
+                                </tr>
+                                <tr>
+                                <td>Create Date</td>
+                                <td>${OderCreateDate}</td>   
+                                </tr>
+                                <tr>
+                                <td>Movie</td>
+                                <td>${OrderMovie.title}</td>   
+                                </tr>
+                                <tr>
+                                <td>Theater</td>
+                                <td>${OrderTheater.name}</td>   
+                                </tr>
+                                <tr>
+                                <td>Movie Date</td>
+                                <td>${OrderScheduleDate} ${OrderSchedule.time}</td>   
+                                </tr>
+                                <tr>
+                                <td>Number of Ticket</td>
+                                <td>${OrderOrder.numTickets}</td>   
+                                </tr>
+                                <tr>
+                                <td>Unit Price</td>
+                                <td>$ ${OrderShowing.unitPrice}</td>   
+                                </tr>
+                                <tr>
+                                <td>Total</td>
+                                <td>$ ${OrderPrice}</td>   
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                 </div>
+               
+                </div>
+            </div>
         </div>
+        
         
 
         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>

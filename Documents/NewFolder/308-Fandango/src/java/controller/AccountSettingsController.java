@@ -13,6 +13,8 @@ import java.io.IOException;
 import javax.persistence.EntityManager;
 import entity.Account;
 import entity.Payments;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import servlet.EMF;
+import servlet.HashPassword;
 public class AccountSettingsController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
@@ -36,23 +39,29 @@ public class AccountSettingsController extends HttpServlet {
                 
                 Account user = (Account)session.getAttribute("UserInfoSession");
                 Payments pay = new Payments();
-                changeSettings(em,user,pay,uname,pass,cardNumber,year,month,firstName,lastName,zipcode);
-                em.getTransaction().begin();
-                em.merge(user); 
-                em.getTransaction().commit();
-                em.close();
-                if((cardNumber!=null)&&(year!=null)&&(month!=null)&&(firstName!=null)&&(lastName!=null)&&(zipcode!=null)){
-                    session.setAttribute("Payment",pay);
+                try {
+                    changeSettings(em,user,pay,uname,pass,cardNumber,year,month,firstName,lastName,zipcode);
+                    em.getTransaction().begin();
+                    em.merge(user); 
+                    em.getTransaction().commit();
+                    em.close();
+                    if((cardNumber!=null)&&(year!=null)&&(month!=null)&&(firstName!=null)&&(lastName!=null)&&(zipcode!=null)){
+                        session.setAttribute("Payment",pay);
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(AccountSettingsController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 RequestDispatcher rd = request.getRequestDispatcher("userAccount.jsp");
                 rd.forward(request, response);        
     }
-    public void changeSettings(EntityManager em,Account user,Payments pay,String uname,String pass,String cardNumber,String year,String month,String firstName,String lastName,String zipcode){
+    public void changeSettings(EntityManager em,Account user,Payments pay,String uname,String pass,String cardNumber,String year,String month,String firstName,String lastName,String zipcode) throws Exception{
         System.out.println("enter1");
         if(uname!=null){
             user.setUserName(uname);
         }else if(pass!=null){
-            user.setPassword(pass);
+            HashPassword hashPass = new HashPassword();
+            String hasedPassword = hashPass.getSaltedHash(pass);
+            user.setPassword(hasedPassword);
         }else if((cardNumber!=null)&&(year!=null)&&(month!=null)&&(firstName!=null)&&(lastName!=null)&&(zipcode!=null)){
             System.out.println("enter2");
             if(user.getPaymentId()==null){

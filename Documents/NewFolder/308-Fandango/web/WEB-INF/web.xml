@@ -210,5 +210,16 @@
   </servlet-mapping>    
   
 
+  <servlet>
+    <description></description>
+    <display-name>MovieGenresController</display-name>
+    <servlet-name>MovieGenresController</servlet-name>
+    <servlet-class>controller.MovieGenresController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MovieGenresController</servlet-name>
+    <url-pattern>/MovieGenresController</url-pattern>
+  </servlet-mapping>     
+
     
 </web-app>

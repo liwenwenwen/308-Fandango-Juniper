@@ -14,6 +14,8 @@ import javax.persistence.EntityManager;
 import entity.Account;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.TypedQuery;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import servlet.EMF;
+import servlet.HashPassword;
 import static source.Constants.CHECKOUT_TIME_FORMAT;
 
 
@@ -45,14 +48,20 @@ public class RegistrationController extends HttpServlet {
                         RequestDispatcher rd = request.getRequestDispatcher("register.jsp");
                         rd.forward(request, response);
                     }else{
-                        Account newUser = createNewAccount(em,uname,email,pass);
-                        em.getTransaction().begin();
-                        em.persist(newUser);
-                        em.getTransaction().commit();
-                        em.close();
-                        userInfoSession.setAttribute("Payment", null);
-                        userInfoSession.setAttribute("TheaterFavList", null);
-                        userInfoSession.setAttribute("UserInfoSession", newUser);
+                        Account newUser;
+                        try {
+                            newUser = createNewAccount(em,uname,email,pass);
+                            em.getTransaction().begin();
+                            em.persist(newUser);
+                            em.getTransaction().commit();
+                            em.close();
+                            userInfoSession.setAttribute("Payment", null);
+                            userInfoSession.setAttribute("TheaterFavList", null);
+                            userInfoSession.setAttribute("UserInfoSession", newUser);
+                        } catch (Exception ex) {
+                            Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
                         RequestDispatcher rd = request.getRequestDispatcher("movies.jsp");
                         rd.forward(request, response);
                     }
@@ -72,14 +81,17 @@ public class RegistrationController extends HttpServlet {
         
     }
         
-    public Account createNewAccount(EntityManager em,String uname,String email,String pass){
+    public Account createNewAccount(EntityManager em,String uname,String email,String pass) throws Exception{
         Account newUser = new Account();
         Date currentDate = new Date();
+        HashPassword hashPass = new HashPassword();
         String strCurrentDate = new SimpleDateFormat(CHECKOUT_TIME_FORMAT).format(currentDate);
+        String hasedPassword = hashPass.getSaltedHash(pass);
+        
         newUser.setJoinedDate(strCurrentDate);
         newUser.setUserName(uname);
         newUser.setEmail(email);
-        newUser.setPassword(pass);
+        newUser.setPassword(hasedPassword);
         return newUser;
     }
 }

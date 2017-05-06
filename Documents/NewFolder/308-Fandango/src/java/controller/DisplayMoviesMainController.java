@@ -63,7 +63,7 @@ public class DisplayMoviesMainController extends HttpServlet {
         return movieResults;
     }
     public List<Movie> makeMovieSubList(EntityManager em) throws ParseException{
-        TypedQuery<Movie> query = em.createNamedQuery("Movie.findByTwoDates", Movie.class);
+        TypedQuery<Movie> query = em.createNamedQuery("Movie.findByTwoDatesNew", Movie.class);
         DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH); //d MMMM yyyy
         Date from = format.parse(SUB_MOVIE_DATE_FROM);
         Date to = format.parse(SUB_MOVIE_DATE_TO);
