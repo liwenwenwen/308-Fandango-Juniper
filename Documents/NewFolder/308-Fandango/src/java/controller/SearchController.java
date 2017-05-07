@@ -48,7 +48,7 @@ public class SearchController extends HttpServlet {
                 rd.forward(request, response);    
     }  
     public List<Movie> searchResults(EntityManager em,String searchTarget){
-       TypedQuery<Movie> query = em.createQuery("SELECT m FROM Movie m WHERE m.title LIKE :search", Movie.class);
+       TypedQuery<Movie> query = em.createQuery("SELECT m FROM Movie m WHERE m.title LIKE :search order by m.releaseDate desc", Movie.class);
        query.setParameter("search", "%" + searchTarget + "%");
        List<Movie> searchedMovies = query.setMaxResults(DISPLAY_SEARCH_RESULTS).getResultList();       
        return searchedMovies;

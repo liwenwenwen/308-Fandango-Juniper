@@ -33,6 +33,7 @@
         
         <!-- Page specific CSS links go here -->
         <link rel="stylesheet" href="css/header.css">
+        <link rel="stylesheet" href="css/loadmore_css_search.css">
         <link rel="stylesheet" href="css/movies.css">
     </head>
     <body>
@@ -57,7 +58,7 @@
                 <li><a href="news.html">News</a></li>
               </ul>
             </li-->
-            <li><a class="nav-btn" href="movies.jsp">Movies</a></li>
+            <li><a class="nav-btn" href="MovieGenresController?method=get&genre=action">Movies</a></li>
             <li><a class="nav-btn" href="DisplayTheatersMainController">Theaters</a></li>
             <!--<li><a class="nav-btn" href="#">Showtimes</a></li>-->
             <!--change button if user is logged in-->
@@ -86,15 +87,17 @@
         <!-- /Title -->        
         <!-- Page Content -->
         <div class="container" style="margin-top: 20px;">
-          <div class="movie-listing">
+          <div class="movie-listing" >
             <c:forEach var="item" items="${SearchMovies}" >
                 <a href="MovieDetailsController?method=get&movieId=<c:out value="${item.id}"/>" class="thumbnail movie-thumbnail">
-                 <img class="movie-poster img-responsive noMargin" src="<c:out value="${item.cover}"/>" alt="">
-              <div class="movie-text">
-                <span class="movie-title"><c:out value="${item.title}"/></span>
-              </div>
-            </a>
-            </c:forEach>  
+                    <img class="movie-poster img-responsive noMargin" src="<c:out value="${item.cover}"/>" alt="">
+                    <div class="movie-text">
+                    <span class="movie-title"><c:out value="${item.title}"/></span>
+                    </div>
+                </a>
+            </c:forEach> 
+            
+              
           </div>
           
          <!--input type="hidden" name="searchResults" value="${sessionScope.SearchMovies}"-->
@@ -111,7 +114,7 @@
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
         <script src="js/bootstrap.js"></script>
-        <script src="js/loadMore_generalSearch.js"></script>
+        <script src="js/loadmore_search.js"></script>
     </body>
 </html>
 

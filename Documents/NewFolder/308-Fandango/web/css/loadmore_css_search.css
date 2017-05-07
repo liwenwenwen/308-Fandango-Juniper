@@ -1,0 +1,25 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : May 7, 2017, 3:04:05 PM
+    Author     : liwenfan
+*/
+
+#searchlist a{
+    display:none;
+    display: inline-block;
+    width: 200px;
+    border: none;
+    padding: 0;
+    transition-property: box-shadow;
+    transition-duration: 0.2s;
+    text-decoration: none!important;
+    
+}
+#searchlist a:hover, #searchlist a:focus {
+  box-shadow: 0 1px 20px rgba(0, 0, 0, 0.5);
+}
+

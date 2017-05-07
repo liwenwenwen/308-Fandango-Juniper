@@ -47,7 +47,7 @@
                 <li><a href="news.html">News</a></li>
               </ul>
             </li-->
-            <li><a class="nav-btn" href="movies.jsp">Movies</a></li>
+            <li><a class="nav-btn" href="MovieGenresController?method=get&genre=action">Movies</a></li>
             <li><a class="nav-btn" href="DisplayTheatersMainController">Theaters</a></li>
             <!--<li><a class="nav-btn" href="#">Showtimes</a></li>-->
             <!--change button if user is logged in-->         

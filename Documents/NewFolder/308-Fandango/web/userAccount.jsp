@@ -33,7 +33,7 @@
         <link rel="stylesheet" href="css/movieview.css">
         <link rel="stylesheet" href="css/checkout.css">
     </head>
-    <body>
+    <body pay-year="${Payment.expirationYear}" pay-month="${Payment.expirationMonth}">
       <!--[if lt IE 8]>
           <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
       <![endif]-->
@@ -55,7 +55,7 @@
                 <li><a href="news.html">News</a></li>
               </ul>
             </li-->
-            <li><a class="nav-btn" href="movies.jsp">Movies</a></li>
+            <li><a class="nav-btn" href="MovieGenresController?method=get&genre=action">Movies</a></li>
             <li><a class="nav-btn" href="DisplayTheatersMainController">Theaters</a></li>
             <!--<li><a class="nav-btn" href="#">Showtimes</a></li>-->
             <!--change button if user is logged in-->
@@ -160,7 +160,7 @@
                             <input class="text-input-md longtext" type="text" name="cardNumber" value="${Payment.cardNum}">
                             <h1>Expiration Date</h1>
                             <select class="monthyear" id="month" name="month" value="${Payment.expirationMonth}"></select>
-                            <select class="monthyear" id="year" name="year" value="${Payment.expirationYear}"></select>
+                            <select class="monthyear" id="year" name="year"  value="${Payment.expirationYear}"></select>
                             <h1>First Name</h1>
                             <input class="text-input-md shorttext" type="text" name="firstName" value="${Payment.firstName}">
                             <h1>Last Name</h1>

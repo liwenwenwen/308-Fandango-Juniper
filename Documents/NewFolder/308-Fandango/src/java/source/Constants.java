@@ -62,6 +62,8 @@ public final class Constants {
     /* time format*/
     public static final String CHECKOUT_TIME_FORMAT= "EEE, MMM dd yyyy";
     public static final String ORDER_TIME_FORMAT="MMM dd yyyy";
+    public static final String TIME_24_FORMAT="HH:mm";
+    public static final String DATE_TIME_FORMAT="MMM dd yyyy,HH:mm";
     /* movie genres */
     public static final String G_MOVIE_DATE_FROM = "January 1, 2016";
     public static final String G_MOVIE_DATE_TO = "May 15, 2017";

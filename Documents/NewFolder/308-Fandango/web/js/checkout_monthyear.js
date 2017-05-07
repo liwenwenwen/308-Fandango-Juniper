@@ -4,6 +4,14 @@
  * and open the template in the editor.
  */
 
+$(function(){
+        var year=$("body").attr("pay-year");
+        $("#year").val(year);
+});
+$(function(){
+        var month=$("body").attr("pay-month");
+        $("#month").val(month);
+});
 
 var ystart = 2017;
 var yend = 2035;

@@ -63,7 +63,7 @@
                 <li><a href="news.html">News</a></li>
               </ul>
             </li-->
-            <li><a class="nav-btn" href="movies.jsp">Movies</a></li>
+            <li><a class="nav-btn" href="MovieGenresController?method=get&genre=action">Movies</a></li>
             <li><a class="nav-btn" href="DisplayTheatersMainController">Theaters</a></li>
             <!--<li><a class="nav-btn" href="#">Showtimes</a></li>-->
             <!--change button if user is logged in-->
@@ -187,24 +187,35 @@
            <!--Movie Reviews -->
             <div id="tickets" class="tabcontent reviewcontainer">
                 
-                <h3>Movie Times + Tickets</h3>
+                <h3>Movie Times + Tickets [ ${CurrentDate} ] </h3>
                 <!--viewTimes 7days-->
                 <c:forEach var="item2" items="${MovieScheduleList}"  varStatus="status">
                 <div id="part-bg" class="reviewheader">
-                    <center> [ ${CurrentDate} ] At [ ${TheaterInfo[status.index].name} ]</center>
+                    <center> ${TheaterInfo[status.index].name} </center>
                 </div>
                <!--TAB BODY-->
                <div class="leavetopspace">
-                    <c:forEach var="item" items="${item2}" >
+                    <c:forEach var="item" items="${item2}" varStatus="status2">
                         <div class="reviewTitle-body">
-                            <a href="PassValuesController?method=get&scheduleId=${item.id}&selectedTheaterId=${TheaterInfo[status.index].id}">
-                            <!--a href="checkout.jsp"-->
-                            <span class="btn nav-btn" ><c:out value="${item.time}"/></span>
-                            </a>
+                            <c:choose>
+                                <c:when test="${MovieScheduleTimeCheckList[status.index][status2.index]==true}">
+                                    <a href="PassValuesController?method=get&scheduleId=${item.id}&selectedTheaterId=${TheaterInfo[status.index].id}">
+                                    <span class="btn nav-btn" >${item.time}</span>
+                                    </a>
+                                </c:when>
+                                <c:otherwise>
+                                    <span class="btn nav-btn" style="background-color: #d4d4d4;">${item.time}</span>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </c:forEach>
                </div>    
                </c:forEach>
+               <c:if test="${empty MovieScheduleList}">
+                   <div id="part-bg" class="reviewheader">
+                       <center> Movie Tickets Are Not Available At This Point, Check Back Later! </center>
+                   </div>
+               </c:if>
 
             </div>
         </div>

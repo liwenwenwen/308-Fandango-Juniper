@@ -22,11 +22,16 @@ import entity.MovieSchedules;
 import entity.MovieShowings;
 import entity.TheaterFav;
 import entity.Theaters;
+import java.sql.Time;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -35,8 +40,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import servlet.EMF;
 import static source.Constants.CHECKOUT_TIME_FORMAT;
+import static source.Constants.DATE_TIME_FORMAT;
 import static source.Constants.DEFAULT_THEATER_ID;
 import static source.Constants.DISPLAY_MOVIE_REVIEWS;
+import static source.Constants.ORDER_TIME_FORMAT;
+import static source.Constants.TIME_24_FORMAT;
 
 public class MovieDetailsController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -71,9 +79,15 @@ public class MovieDetailsController extends HttpServlet {
                 List<Theaters> theaterInfoList = new ArrayList<Theaters>();
                 List<List<MovieSchedules>> movieSchedules =getMovieSchedule(em,user,theaterInfoList,movieId,currentDate);
                 session.setAttribute("MovieScheduleList",movieSchedules);
+                
+                    try {
+                        List<List<Boolean>> passTime = checkSchedulesTimes(em,movieSchedules);
+                        session.setAttribute("MovieScheduleTimeCheckList",passTime);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(MovieDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                
                 /*theater info*/
-                int theaterId = DEFAULT_THEATER_ID;
-                Theaters theater = em.find(Theaters.class,theaterId);
                 session.setAttribute("TheaterInfo",theaterInfoList);
                 /* moive gener*/
                 List<String> genreList = getGenresList(em,movieId);
@@ -104,6 +118,36 @@ public class MovieDetailsController extends HttpServlet {
         Date currentDate = new Date();
         return currentDate;
     }
+    public Time getCurrentTime(){
+        SimpleDateFormat format = new SimpleDateFormat(TIME_24_FORMAT);
+        Date date= new Date();
+        Time currentTime = new Time(date.getTime());
+        System.out.println("curr "+ currentTime);
+        return currentTime;
+    }
+    public Time convertStringtoTime(String time) throws ParseException{
+        SimpleDateFormat format2 = new SimpleDateFormat(ORDER_TIME_FORMAT);
+        Date tempDate = getCurrentDate();
+        String temp = format2.format(tempDate);
+        String allTime = temp + ","+time;
+        SimpleDateFormat format = new SimpleDateFormat(DATE_TIME_FORMAT);
+        /*format.setTimeZone(TimeZone.getTimeZone("GMT"));*/
+        Date d1 =format.parse(allTime);
+        Time tTime = new Time(d1.getTime());
+        System.out.println("use "+ d1);
+        return tTime;
+    }
+    public boolean compareTwoTimes(Date currentTime,Date tTime){
+     
+        if(currentTime.before(tTime)){
+            System.out.println("1");
+            return true;
+        }else{
+            System.out.println("2");
+            return false;
+        }
+    }
+    
     public List<List<MovieSchedules>> getMovieSchedule(EntityManager em,Account user,List<Theaters> theaterInfoList, Integer movieId,Date currentDate){
         List<TheaterFav> userTheaterFavList=new ArrayList<TheaterFav>();
         List<Integer> showingIdList = new ArrayList<Integer>();
@@ -197,6 +241,26 @@ public class MovieDetailsController extends HttpServlet {
             strMovieGenres.add(mg);
         }
         return strMovieGenres;
+    }
+    public List<List<Boolean>> checkSchedulesTimes(EntityManager em, List<List<MovieSchedules>> movieSchedules) throws ParseException{
+        if(movieSchedules!=null){
+        List<List<Boolean>> passTime = new ArrayList<List<Boolean>>();
+        Time currentTime = getCurrentTime();
+        for(int i=0;i<movieSchedules.size();i++){
+            List<Boolean> timeSet = new ArrayList<Boolean>();
+            for(int j=0;j<movieSchedules.get(i).size();j++){
+               String movieTime = movieSchedules.get(i).get(j).getTime();
+               Time ttime = convertStringtoTime(movieTime);
+               boolean checkTime = compareTwoTimes(currentTime,ttime);
+               timeSet.add(checkTime);
+               
+            }
+            passTime.add(timeSet);
+        }
+        return passTime;
+    }else{
+            return null;
+        }
     }
 }
 

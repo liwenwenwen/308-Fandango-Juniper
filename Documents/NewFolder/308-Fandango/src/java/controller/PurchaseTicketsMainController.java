@@ -75,7 +75,7 @@ public class PurchaseTicketsMainController extends HttpServlet {
                 }
                 em.close();
                 
-                RequestDispatcher rd = request.getRequestDispatcher("movies.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("afterCheckout.jsp");
                 rd.forward(request, response);
     }
     public boolean makePayment(String cardnum,String expirM,String expirY,String firstN,String lastN,String zipcode){
