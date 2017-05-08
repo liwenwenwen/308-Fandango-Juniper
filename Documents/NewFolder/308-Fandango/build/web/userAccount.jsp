@@ -76,7 +76,12 @@
       <!-- welcome title-->
       <div id="title-bg">
          <div id="title-div" class="container">
-           <span id="page-title">Welcome, ${UserInfoSession.userName}</span>
+            <c:if test="${Admin!=null}">
+                 <span id="page-title">Welcome, ${UserInfoSession.userName} [Admin]</span>
+            </c:if>
+            <c:if test="${Admin==null}">
+                <span id="page-title">Welcome, ${UserInfoSession.userName}</span>
+            </c:if>
          </div>
        </div>
        <div class="container">
@@ -85,6 +90,9 @@
                <button class="tablinks" onclick="openInfo(event, 'setting')">Account Settings</button>
                <button class="tablinks" onclick="openInfo(event, 'myfavs')">My Movies + Theaters</button>
                <button class="tablinks" onclick="openInfo(event, 'history')">Purchase History</button>
+               <c:if test="${Admin!=null}">
+               <button class="tablinks" onclick="openInfo(event, 'checkstatus')">Third Party Data</button>
+               </c:if>
             </div>
             <div id="dashboard" class="tabcontent current reviewcontainer" >
                 <h3>Dashboard</h3>
@@ -246,6 +254,17 @@
                     </c:otherwise>
                 </c:choose>
             </div>
+           <!--View Tird Party -->
+           <c:if test="${Admin!=null}">
+           <div id="checkstatus" class="tabcontent reviewcontainer">
+               <div id="part-bg"class="reviewheader">
+                    Check Any Updates From Third Party
+               </div>
+               <form action="ThirdPartyUpdates" method="get">
+               <center><button class="btn nav-btn" style="margin-top: 10px;" type="submit" >Check</button></center>
+               </form>
+           </div>
+           </c:if>
         </div>
         
         

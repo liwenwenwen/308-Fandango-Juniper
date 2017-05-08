@@ -172,7 +172,7 @@
                 </div>
                 <div class="reviewTitle-author">
                     <span >By <c:out value="${item.userName}"/></span>
-                    <span > Written<c:out value="${item.date}"/></span>
+                    <span > Written <c:out value="${item.date}"/></span>
                 </div>
                 <div class="reviewTitle-body" 
                     <span ><c:out value="${item.body}"/></span>

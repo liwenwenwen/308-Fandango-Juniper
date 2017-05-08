@@ -15,11 +15,15 @@ public final class Constants {
     /* original[0] loadMovie[1] loadShowings[2] loadSchedule[3] loadGenreNames2017[4] loadGenreNames2016[5]
        loadGenrewithMovie2017[6] loadGenrewithMovie2016[7]*/
     public static final int TRY_TO_LOAD = 0; 
+    /* admin email*/
+    public static final String ADMIN_EMAIL = "liwen.fan@stonybrook.edu";
+    /* third party url */
+    public static final String THIRD_PARTY_URL = "http://localhost:8090/308-Fandango-Thirdparty/"; 
     /* Some constants numbers*/
-    public static final int DISPLAY_MAIN_MOVIES = 10;
+    public static final int DISPLAY_MAIN_MOVIES = 25;
     public static final int DISPLAY_MAIN_THEATERS =20;
     public static final int DISPLAY_GENRE_RESULTS = 40;
-    public static final int DISPLAY_SEARCH_RESULTS = 20;
+    public static final int DISPLAY_SEARCH_RESULTS = 40;
     public static final int DISPLAY_MOVIE_REVIEWS = 10;
     public static final int DISPLAY_MOVIE_FAVED = 5;
     public static final int DISPLAY_PURCHASE_HISTORY=10;
@@ -43,9 +47,9 @@ public final class Constants {
     public static final String EMAIL_TOTAL = "Total: ";
     /* main page movie display */
     public static final String MOVIE_DATE_FROM = "April 15, 2017";
-    public static final String MOVIE_DATE_TO = "April 30, 2017";
-    public static final String SUB_MOVIE_DATE_FROM = "May 1, 2017";
-    public static final String SUB_MOVIE_DATE_TO = "May 15, 2017";
+    public static final String MOVIE_DATE_TO = "May 7, 2017";
+    public static final String SUB_MOVIE_DATE_FROM = "May 10, 2017";
+    public static final String SUB_MOVIE_DATE_TO = "May 30, 2017";
     /* movie showing generate*/
     public static final String S_MOVIE_DATE_FROM = "April 20, 2017";
     public static final String S_MOVIE_DATE_TO = "April 30, 2017";

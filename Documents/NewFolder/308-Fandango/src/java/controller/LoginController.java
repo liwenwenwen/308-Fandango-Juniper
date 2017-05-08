@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import servlet.EMF;
 import servlet.HashPassword;
+import static source.Constants.ADMIN_EMAIL;
 
 
 
@@ -40,18 +41,24 @@ public class LoginController extends HttpServlet {
                 
 		if(uname.isEmpty()||pass.isEmpty())
 		{
+                    request.setAttribute("loginEmpty", "true");
                     RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-                    rd.forward(request, response);
-		}
+                    rd.include(request, response);
+		}else{
                 Account checkedUserList =null;                
                 try {
                     checkedUserList = checkUsernamePassword(em,uname,pass);
                     if(checkedUserList==null){
                         em.close();
+                        request.setAttribute("loginNotExist", "true");
                         RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-                        rd.forward(request, response);
+                        rd.include(request, response);
                     }else{
                         Account loginUser =checkedUserList;
+                        boolean admin = checkAdminStatus(loginUser);
+                        if(admin==true){
+                            userInfoSession.setAttribute("Admin", "true");
+                        }
                         Payments payment = loginUser.getPaymentId();
                         userInfoSession.setAttribute("Payment", payment);
                         List<String> theaterFavForIcon = checkUserTheaterFav(em,loginUser);
@@ -64,8 +71,15 @@ public class LoginController extends HttpServlet {
                 } catch (Exception ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                   
+                }       
 	}
+    public boolean checkAdminStatus(Account loginUser){
+        String email = loginUser.getEmail();
+        if(email.equals(ADMIN_EMAIL)){
+            return true;
+        }
+        return false;
+    }
     public Account checkUsernamePassword(EntityManager em, String uname, String pass) throws Exception{
        HashPassword hashPass = new HashPassword();
        /*

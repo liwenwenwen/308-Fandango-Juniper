@@ -219,7 +219,28 @@
   <servlet-mapping>
     <servlet-name>MovieGenresController</servlet-name>
     <url-pattern>/MovieGenresController</url-pattern>
+  </servlet-mapping> 
+  
+ <servlet>
+    <description></description>
+    <display-name>ThirdPartyUpdates</display-name>
+    <servlet-name>ThirdPartyUpdates</servlet-name>
+    <servlet-class>controller.ThirdPartyUpdates</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ThirdPartyUpdates</servlet-name>
+    <url-pattern>/ThirdPartyUpdates</url-pattern>
   </servlet-mapping>     
 
-    
+ <servlet>
+    <description></description>
+    <display-name>ConfirmThirdPartyUpdates</display-name>
+    <servlet-name>ConfirmThirdPartyUpdates</servlet-name>
+    <servlet-class>controller.ConfirmThirdPartyUpdates</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ConfirmThirdPartyUpdates</servlet-name>
+    <url-pattern>/ConfirmThirdPartyUpdates</url-pattern>
+  </servlet-mapping>     
+   
 </web-app>

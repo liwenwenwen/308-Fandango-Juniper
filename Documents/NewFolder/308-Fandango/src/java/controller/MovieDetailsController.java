@@ -235,6 +235,7 @@ public class MovieDetailsController extends HttpServlet {
         TypedQuery<Genres> query = em.createNamedQuery("Genres.findByMovieId", Genres.class);
         query.setParameter("movieId", movieId);
         List<Genres> movieGenresResults=query.getResultList();
+        System.out.println("here"+movieGenresResults.size());
         for(int i=0;i<movieGenresResults.size();i++){
             GenreNames genreNames = movieGenresResults.get(i).getGenreId();
             String mg = genreNames.getGenreName();

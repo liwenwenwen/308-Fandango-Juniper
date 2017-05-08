@@ -1,4 +1,5 @@
 <%@page import="entity.Account"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html class="no-js" lang="">
     <head>
@@ -62,6 +63,12 @@
         <input class="text-input-md" type="text" name="username">
         <h3>Password</h3>
         <input class="text-input-md" type="password" name="password">
+        <c:if test="${loginEmpty!=null}">
+            <p style="color:red;">User name/Password can not be empty.</p>
+        </c:if>
+        <c:if test="${loginNotExist!=null}">
+            <p style="color:red;">That email and password don't match our records. Please try again.</p>
+        </c:if>
         <a class="btn nav-btn" href="register.jsp">[Don't have an Account?] Register</a>
         <button class="btn nav-btn" type="submit" value="register">Log In</button>
       </form>  

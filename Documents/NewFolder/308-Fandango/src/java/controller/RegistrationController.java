@@ -39,14 +39,16 @@ public class RegistrationController extends HttpServlet {
                 HttpSession userInfoSession = request.getSession();
                 
 		if(uname.isEmpty()||pass.isEmpty()||email.isEmpty()){
+                    request.setAttribute("registerEmpty", "true");
                     RequestDispatcher rd = request.getRequestDispatcher("register.jsp");
                     rd.include(request, response);
 		}else{ 
                     boolean allowToRegister = checkUsernameEmail(em,uname,email);
                     if(allowToRegister==false){
                         em.close();
+                        request.setAttribute("registerExist", "true");
                         RequestDispatcher rd = request.getRequestDispatcher("register.jsp");
-                        rd.forward(request, response);
+                        rd.include(request, response);
                     }else{
                         Account newUser;
                         try {
